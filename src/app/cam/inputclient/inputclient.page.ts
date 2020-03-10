@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActionSheetController, AlertController, ToastController, Platform } from '@ionic/angular';
-import { CamServiceService } from '../service/cam/cam-service.service';
+import { CamServiceService } from '../../service/cam/cam-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 import { File, DirectoryEntry, FileEntry  } from '@ionic-native/file/ngx';

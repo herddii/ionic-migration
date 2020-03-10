@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { CamServiceService } from '../service/cam/cam-service.service';
-import { LoginService } from '../service/login/login.service';
+import { CamServiceService } from '../../service/cam/cam-service.service';
+import { LoginService } from '../../service/login/login.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 

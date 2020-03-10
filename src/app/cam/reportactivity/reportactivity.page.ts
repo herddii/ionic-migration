@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CamServiceService } from '../service/cam/cam-service.service';
+import { CamServiceService } from '../../service/cam/cam-service.service';
 import { Location } from '@angular/common';
 import { UniquePipe } from 'ngx-pipes';
-import { LoginService } from '../service/login/login.service';
+import { LoginService } from '../../service/login/login.service';
 
 @Component({
   selector: 'app-reportactivity',

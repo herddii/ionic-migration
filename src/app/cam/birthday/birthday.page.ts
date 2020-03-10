@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { PopoverController, IonInfiniteScroll } from '@ionic/angular';
-import { CamServiceService } from '../service/cam/cam-service.service';
-import { PopoverComponent } from '../popover/popover.component';
+import { CamServiceService } from '../../service/cam/cam-service.service';
+import { PopoverComponent } from '../../popover/popover.component';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { Storage } from '@ionic/storage';
-import { LoginService } from '../service/login/login.service';
+import { LoginService } from '../../service/login/login.service';
 @Component({
   selector: "app-birthday",
   templateUrl: "./birthday.page.html",

@@ -15,6 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './add-entertainment.page.html',
   styleUrls: ['./add-entertainment.page.scss'],
 })
+
 export class AddEntertainmentPage implements OnInit {
 
   counting: number = 1;

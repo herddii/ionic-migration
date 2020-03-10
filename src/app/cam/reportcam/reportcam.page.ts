@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Ionic4DatepickerModalComponent } from '@logisticinfotech/ionic4-datepicker';
 import { ModalController } from '@ionic/angular';
-import { CamServiceService } from '../service/cam/cam-service.service';
+import { CamServiceService } from '../../service/cam/cam-service.service';
 @Component({
   selector: 'app-reportcam',
   templateUrl: './reportcam.page.html',

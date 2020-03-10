@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { CamServiceService } from '../service/cam/cam-service.service';
+import { CamServiceService } from '../../service/cam/cam-service.service';
 @Component({
   selector: 'app-companydet',
   templateUrl: './companydet.page.html',

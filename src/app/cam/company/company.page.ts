@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
-import { CamServiceService } from '../service/cam/cam-service.service';
-import { PopoverComponent } from '../popover/popover.component';
+import { CamServiceService } from '../../service/cam/cam-service.service';
+import { PopoverComponent } from '../../popover/popover.component';
 
 @Component({
   selector: 'app-company',
