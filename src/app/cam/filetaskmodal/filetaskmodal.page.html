@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()"><ion-icon name="ios-arrow-back" style="font-size: 12px;"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+  <ion-list>
+        <ion-item *ngFor="let t of progList; let i = index">
+          <ion-avatar slot="start">
+            <img *ngIf="t.content_file_download.toLowerCase().lastIndexOf('.jpg') > -1 || t.content_file_download.toLowerCase().lastIndexOf('.jpeg') > -1" [src]="'http://sm.mncgroup.com/datafile/public/'+t.id_filetype+'/'+t.content_file_download">
+            <img *ngIf="t.content_file_download.toLowerCase().lastIndexOf('.xls') > -1 || t.content_file_download.toLowerCase().lastIndexOf('.xlsx') > -1" [src]="'assets/img/xls.jpg'">
+            <img *ngIf="t.content_file_download.toLowerCase().lastIndexOf('.pdf') > -1" [src]="'assets/img/pdf.jpg'">
+            <img *ngIf="t.content_file_download.toLowerCase().lastIndexOf('.ppt') > -1 || t.content_file_download.toLowerCase().lastIndexOf('.pptx') > -1" [src]="'assets/img/PPT.jpg'">
+          </ion-avatar>
+          <ion-label>
+            <h2>{{t.content_title}}</h2>
+            <h3>{{t.updated_at}}</h3>
+          </ion-label>
+          <ion-checkbox slot="end" (ionChange)="getVal(t,$event)"></ion-checkbox>
+        </ion-item>
+  </ion-list>
+
+</ion-content>

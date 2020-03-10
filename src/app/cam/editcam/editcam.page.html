@@ -1,0 +1,169 @@
+<ion-header *ngIf="!this.loadView">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="transaction"></ion-back-button>
+    </ion-buttons>
+    <span style="display: flex;
+      justify-content: center;">{{this.username}}</span>
+    <ion-buttons slot="end" (click)="addEvent()">
+      <ion-icon name="checkmark" style="font-size: 24px;
+      padding: 5px;
+      font-weight: 800;"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+  <ion-content>
+      <div *ngIf="!this.loadView">
+        <ion-card style="border-radius: 0px; margin-bottom: 15px;">
+          <ion-item lines="none">
+            <ion-label *ngIf="this.goplan" slot="start" style="font-size: 12px;">Report</ion-label>
+            <ion-label *ngIf="!this.goplan" slot="start" style="font-size: 12px;">Planning</ion-label>
+              <ion-toggle slot="end" color="danger" mode="ios" [checked]="goplan" disabled="true" (ionChange)="changeVal($event)">Report
+              </ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" placeholder="Subject" [(ngModel)]="subject"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" placeholder="Description" [(ngModel)]="desc"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" placeholder="Potency Revenue" [(ngModel)]="potency"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-input type="text" placeholder="Location" [(ngModel)]="location"></ion-input>
+            </ion-item>
+        
+          <ion-item>
+            <ion-label slot="start" style="font-size: 12px;">Activity Type</ion-label>
+            <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d; content: '>'" slot="end"
+              [(ngModel)]="activityType" [items]="typeAct" placeholder="Tap Me !" itemValueField="id" itemTextField="text"
+              [canSearch]="true" [hasVirtualScroll]="true" (onChange)="actChange($event)">
+              <ng-template ionicSelectableItemIconTemplate let-port="item" let-isPortSelected="isItemSelected">
+                <ion-icon item-left [name]="isPortSelected ? 'checkbox-outline' : 'square-outline'" [color]="isPortSelected ? 'primary' : null">
+                </ion-icon>
+              </ng-template>
+            </ionic-selectable>
+          </ion-item>
+        </ion-card>
+        <ion-card>
+          <ion-item>
+            <ion-col size="4">
+              <ion-label style="font-size: 12px;">From</ion-label>
+            </ion-col>
+            <ion-col size="4">
+              <ion-datetime displayFormat="YYYY MMM, DD" style="font-size: 12px; text-align: right;"
+                (ionChange)="dateChanged_start($event)" placeholder="Date" [(ngModel)]="dateStart"></ion-datetime>
+            </ion-col>
+            <ion-col size="4">
+              <ion-datetime displayFormat="HH:mm" style="font-size: 12px; text-align: right;"
+                (ionChange)="timeChanged_start($event)" placeholder="Time" [(ngModel)]="timeStart"></ion-datetime>
+            </ion-col>
+          </ion-item>
+          <ion-item>
+            <ion-col size="4">
+              <ion-label style="font-size: 12px;">To</ion-label>
+            </ion-col>
+            <ion-col size="4">
+              <ion-datetime displayFormat="YYYY MMM, DD" style="font-size: 12px; text-align: right;"
+                (ionChange)="dateChanged_end($event)" placeholder="Date" [(ngModel)]="dateEnd"></ion-datetime>
+            </ion-col>
+            <ion-col size="4">
+              <ion-datetime displayFormat="HH:mm" style="font-size: 12px; text-align: right;"
+                (ionChange)="timeChanged_end($event)" placeholder="Time" [(ngModel)]="timeEnd"></ion-datetime>
+            </ion-col>
+          </ion-item>
+        </ion-card>
+        <ion-card>
+          <ion-item>
+            <ion-label slot="start" style="font-size: 12px;">PIC AM</ion-label>
+            <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+              [(ngModel)]="picam" [items]="ports" placeholder="Tap Me !" itemValueField="id" itemTextField="text"
+              [canSearch]="true" [hasVirtualScroll]="true" (onChange)="picamChange($event)">
+              <ng-template ionicSelectableItemIconTemplate let-port="item" let-isPortSelected="isItemSelected">
+                <ion-icon item-left [name]="isPortSelected ? 'checkbox-outline' : 'square-outline'" [color]="isPortSelected ? 'primary' : null">
+                </ion-icon>
+              </ng-template>
+              <ng-template ionicSelectableHeaderTemplate>
+                <ion-toolbar>
+                  <ion-buttons end>
+                    <button ion-button (click)="portComponent.close()">
+                      {{portComponent.closeButtonText}}
+                    </button>
+                  </ion-buttons>
+                  <ion-title>
+                    {{portComponent.label}}
+                  </ion-title>
+                </ion-toolbar>
+              </ng-template>
+            </ionic-selectable>
+          </ion-item>
+          <ion-item>
+            <ion-label slot="start" style="font-size: 12px;">Partners</ion-label>
+            <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+              [(ngModel)]="partner" [items]="partners" [isMultiple]="true" placeholder="Partner" itemValueField="id"
+              itemTextField="text" [canSearch]="true" [hasVirtualScroll]="true" (onChange)="portChange($event)">
+              <ng-template ionicSelectableItemIconTemplate let-port="item" let-isPortSelected="isItemSelected">
+                <ion-icon item-left [name]="isPortSelected ? 'checkbox-outline' : 'square-outline'" [color]="isPortSelected ? 'primary' : null">
+                </ion-icon>
+              </ng-template>
+            </ionic-selectable>
+          </ion-item>
+          <ion-item>
+            <ion-label slot="start" style="font-size: 12px;">Agency</ion-label>
+            <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+              [(ngModel)]="agency" [items]="agencys" placeholder="Tap Me !" itemValueField="id" itemTextField="text"
+              [canSearch]="true" [hasVirtualScroll]="true" (onChange)="agencyChange($event)">
+              <ng-template ionicSelectableItemIconTemplate let-port="item" let-isPortSelected="isItemSelected">
+                <ion-icon item-left [name]="isPortSelected ? 'checkbox-outline' : 'square-outline'" [color]="isPortSelected ? 'primary' : null">
+                </ion-icon>
+              </ng-template>
+            </ionic-selectable>
+          </ion-item>
+          <ion-item>
+            <ion-label slot="start" style="font-size: 12px;">Advertiser</ion-label>
+            <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+              [(ngModel)]="advertiser" placeholder="Tap Me !" [items]="advertisers" itemValueField="id" itemTextField="text"
+              [canSearch]="true" (onChange)="advertiserChange($event)">
+              <ng-template ionicSelectableItemIconTemplate let-port="item" let-isPortSelected="isItemSelected">
+                <ion-icon item-left [name]="isPortSelected ? 'checkbox-outline' : 'square-outline'" [color]="isPortSelected ? 'primary' : null">
+                </ion-icon>
+              </ng-template>
+            </ionic-selectable>
+          </ion-item>
+          <ion-item>
+            <ion-label slot="start" style="font-size: 12px;">Brand</ion-label>
+            <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+              [(ngModel)]="brand" [items]="brands" placeholder="Tap Me !" itemValueField="id" itemTextField="text"
+              [canSearch]="true" (onChange)="brandChange($event)">
+              <ng-template ionicSelectableItemIconTemplate let-port="item" let-isPortSelected="isItemSelected">
+                <ion-icon item-left [name]="isPortSelected ? 'checkbox-outline' : 'square-outline'" [color]="isPortSelected ? 'primary' : null">
+                </ion-icon>
+              </ng-template>
+            </ionic-selectable>
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" placeholder="Brand Variant" [disabled]="setdis" [(ngModel)]="variant"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label slot="start" style="font-size: 12px;">Client</ion-label>
+            <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+              [(ngModel)]="client" [items]="clients" [isMultiple]="true" placeholder="Client"
+              itemValueField="id_client_account" itemTextField="text" [canSearch]="true" [hasVirtualScroll]="true"
+              (onChange)="clientChange($event)">
+              <ng-template ionicSelectableItemIconTemplate let-port="item" let-isPortSelected="isItemSelected">
+                <ion-icon item-left [name]="isPortSelected ? 'checkbox-outline' : 'square-outline'" [color]="isPortSelected ? 'primary' : null">
+                </ion-icon>
+              </ng-template>
+            </ionic-selectable>
+          </ion-item>
+        </ion-card>
+      </div>
+      <ion-fab vertical="center" horizontal="center" slot="fixed" *ngIf="this.loadView">
+        <ion-fab-button>
+          <img [src]="'assets/img/loaded.gif'" style="display: flex; justify-content: center; align-items: center;" />
+        </ion-fab-button>
+      </ion-fab>
+  </ion-content>

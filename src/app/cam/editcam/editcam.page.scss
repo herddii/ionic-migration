@@ -1,0 +1,14 @@
+.toggle-icon ::before{
+    background-color: darkslateblue !important;
+}
+
+ion-toggle{
+    --background: color(darkslateblue);
+}
+
+ion-content{
+    font-size: 12px !important;
+    ion-input{
+      font-size: 12px !important;
+    }
+  }

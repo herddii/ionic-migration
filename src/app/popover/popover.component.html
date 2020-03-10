@@ -1,0 +1,37 @@
+<ion-content>
+
+  <ion-list style="font-size: 10px;" lines="none" *ngIf="typeAct === 0">
+    <ion-item button (click)="monthly()">Monthly View</ion-item>
+    <ion-item button (click)="reimburse()">Reimburse</ion-item>
+  </ion-list>
+
+  <ion-list style="font-size: 10px;" lines="none" *ngIf="typeAct === 1">
+    <ion-item button (click)="list()">List View</ion-item>
+    <ion-item button (click)="reimburse()">Reimburse</ion-item>
+  </ion-list>
+
+  <ion-list style="font-size: 10px;" lines="none" *ngIf="typeAct === 'myclient'">
+    <ion-item button (click)="client('listclient')">List Client</ion-item>
+  </ion-list>
+
+  <ion-list style="font-size: 10px;" lines="none" *ngIf="typeAct === 'listclient'">
+    <ion-item button (click)="client('myclient')">My Client</ion-item>
+  </ion-list>
+
+  <ion-list style="font-size: 10px;" lines="none" *ngIf="typeAct === 'agency'">
+    <ion-item button (click)="company('advertiser')">Advertiser</ion-item>
+  </ion-list>
+
+  <ion-list style="font-size: 10px;" lines="none" *ngIf="typeAct === 'advertiser'">
+    <ion-item button (click)="company('agency')">Advertiser</ion-item>
+  </ion-list>
+
+  <!-- <ion-list style="font-size: 10px;" lines="none" *ngIf="typeAct === 'detail'">
+    <ion-item button (click)="company('agency')">
+      <ion-icon slot="start" src="assets/icon/call.svg" [ngClass]="{'active' : item.phone_number, 'notactive' : !item.phone_number }">
+      </ion-icon>
+      <span slot="end" style="text-align: left;">Call</span>  
+    </ion-item>
+  </ion-list> -->
+
+</ion-content>

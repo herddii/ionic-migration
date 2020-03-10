@@ -1,0 +1,385 @@
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="!this.loadView">
+  <ion-fab-button (click)="gotoadd()">
+    <ion-icon name="add" style="font-weight: bold;"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+<ion-fab vertical="top" horizontal="start" slot="fixed" *ngIf="this.showButton" class="animated fadeInDown">
+  <div style="display: flex; flex-direction: row; height: 60px;
+  background-color: #334fff; border-radius: 50px; margin-top: 5px; justify-content: space-evenly; align-items: center;" [ngStyle]="{'width': this.width}">
+      <div routerLink="/client" class="menukecil">
+        <ion-icon src="assets/icon/team.svg" color="light" style="font-size: 30px;"></ion-icon>
+        <span style="font-size: 10px; font-weight: bold; color: white;">Client</span>
+      </div>
+      <div routerLink="/reimburse" class="menukecil">
+        <ion-icon src="assets/icon/wallet.svg" color="light" style="font-size: 30px;"></ion-icon>
+        <span style="font-size: 10px; font-weight: bold; color: white;">Reimburse</span>
+      </div>
+      <!-- <div routerLink="/company" class="menukecil">
+        <ion-icon src="assets/icon/skyscraper.svg" color="light" style="font-size: 30px;"></ion-icon>
+        <span style="font-size: 10px; font-weight: bold; color: white;">Company</span>
+      </div> -->
+      <div routerLink="/reportactivity" class="menukecil">
+        <ion-icon src="assets/icon/news.svg" color="light" style="font-size: 30px;"></ion-icon>
+        <span style="font-size: 10px; font-weight: bold; color: white;">Report</span>
+      </div>
+      <div routerLink="/birthday" class="menukecil">
+        <ion-icon src="assets/icon/gift.svg" color="light" style="font-size: 30px;"></ion-icon>
+        <span style="font-size: 10px; font-weight: bold; color: white;">Birthday</span>
+      </div>
+    </div>
+</ion-fab>
+
+<ion-content class="background_abu" [scrollEvents]="true" (ionScroll)="onScroll($event)" *ngIf="!this.loadView">
+  <div style="display: flex; flex-direction: row; height: 60px;
+  background-color: #334fff;">
+    <div style="display: flex; flex: 3; align-items: center; justify-content: flex-start;">
+    <ion-buttons>
+      <ion-button (click)="gobacktoawalan()">
+        <ion-icon name="arrow-back" style="padding: 5px;
+        font-size: 1.8em; color: #fff;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- <ion-title color="light" slot="start">CAM ACTIVITY</ion-title> -->
+    <span style="color: white; font-family: Poppin; font-weight: bold;
+    font-size: 1.3rem;">CAM ACTIVITY</span>
+  </div>
+  <div style="display: flex; align-items: center; flex: 1; justify-content: flex-end;">
+    <ion-buttons>
+      <ion-button (click)="bukamenu()">
+        <ion-icon name="notifications" color="light" style="font-size: 20px;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    </div>
+  </div>
+<section *ngIf="actionView === 0" class="today-box" id="today-box">
+  <h3 class="date-title">{{showdate}}</h3>
+  <div style="display: flex; flex-direction: row; padding: 10px; margin-top: 5px; justify-content: space-between;">
+    <div routerLink="/client" class="menukecil">
+      <ion-icon src="assets/icon/team.svg" color="light" style="font-size: 30px;"></ion-icon>
+      <span style="font-size: 10px; font-weight: bold;">Client</span>
+    </div>
+    <div (click)="gotoreimburse()" class="menukecil">
+      <ion-icon src="assets/icon/wallet.svg" color="light" style="font-size: 30px;"></ion-icon>
+      <span style="font-size: 10px; font-weight: bold;">Reimburse</span>
+    </div>
+    <div routerLink="/reportactivity" class="menukecil">
+      <ion-icon src="assets/icon/news.svg" color="light" style="font-size: 30px;"></ion-icon>
+      <span style="font-size: 10px; font-weight: bold;">Report</span>
+    </div>
+    <div routerLink="/birthday" class="menukecil">
+      <ion-icon src="assets/icon/gift.svg" color="light" style="font-size: 30px;"></ion-icon>
+      <span style="font-size: 10px; font-weight: bold;">Birthday</span>
+    </div>
+  </div>
+</section>
+  <div *ngIf='actionView === 0'>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.5" pullMin="100" pullMax="200">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <section class="upcoming-events"
+      *ngIf="this.mycostumarray.length > 0 && this.loads === 1 && !this.nodata && actionView === 0">
+      <div class="container" *ngFor="let task of mycostumarray | groupBy:'week' | pairs">
+        <h3 class="animated flipInX delay-{{ 1 + 0.5 }}s">
+          Week {{task[0]}}
+        </h3>
+        <div class="events-wrapper" *ngFor="let tasklist of task[1]; let i = index">
+          <ion-item-sliding class="animated flipInX delay-{{ i + 0.5 }}s">
+            <ion-item style="background-color: #F7F7F7;">
+              <div class="event" style="width: 100%; background-color: #f7f7f7;"
+                (click)="ActiveClick(tasklist.id_activity, tasklist.id_cam)">
+                <h6 class="event__point">{{tasklist.description}}</h6>
+                <div class="event__duration">
+                  <span style="background-color:  #485fed;; 
+                          color: #fff; 
+                          width: inherit;
+                          display: flex;
+                          justify-content: center;
+                          padding-bottom: 4px;
+                          border-radius: 2px 2px 0px 0px;">{{tasklist.DayD}}</span>
+                  <span style="font-size: large; color:  #485fed;">{{tasklist.DateD}}</span>
+                  <span style="color:  #485fed;">{{tasklist.MonthD}}</span>
+                  <!-- <span>{{tasklist.HoursD}}</span>
+                          <span>{{tasklist.MinutesD}}</span> -->
+                </div>
+                <p class="event__description">
+                  {{tasklist.nama_agency}}<br />
+                  {{tasklist.nama_brand}}
+                </p>
+                <div class="event__description">
+                  <span class="flag-report" *ngIf="tasklist.status === 'ACTUAL'">
+                    Report
+                  </span>
+                  <span class="flag-plan" *ngIf="tasklist.status === 'PLAN'">
+                    Plan
+                  </span>
+                  <span style="float: right;">
+                    {{tasklist.client}}
+                  </span>
+                </div>
+              </div>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option color="danger" (click)="deleteCam(tasklist.id_cam,0)">Delete</ion-item-option>
+            </ion-item-options>
+            <ion-item-options *ngIf="tasklist.status === 'PLAN'" side="start">
+              <ion-item-option color="primary" (click)="editCam(tasklist)">Report</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
+        </div>
+      </div>
+    </section>
+    <div *ngIf="this.loads === 0">
+      <ion-list>
+        <ion-item *ngFor="let task of mycostumarray">
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+    <div *ngIf="this.loadView && this.nodata">
+      <img src="assets/img/noevent.png" alt="" />
+    </div>
+  </div>
+  <div *ngIf='actionView === 1'>
+    <section class="today-box" id="today-box" slot="fixed">
+      <span class="breadcrumb">Today</span>
+      <h3 class="date-title">{{showdate}}</h3>
+      <h3 class="date-title">{{showtime}}</h3>
+
+      <div class="plus-icon flash-button" routerLink="/addcam">
+        <ion-icon ios="ios-add" md="md-add"></ion-icon>
+      </div>
+    </section>
+
+    <section class="upcoming-events">
+      <span class="judulbulan">{{monthSuppose}}</span>
+      <calendar #slides [calendarMode]="calendar.mode" [allDayLabel]="calendar.allDayLabel"
+        [currentDate]="calendar.currentDate" [eventSource]="eventSource" [showEventDetail]="false"
+        (onCurrentDateChanged)="onCurrentDateChanged($event)" (onEventSelected)="onEventSelected($event)"
+        (onTitleChanged)="onViewTitleChanged($event)" (onTimeSelected)="onTimeSelected($event)" step="30"
+        [dayviewNormalEventSectionTemplate]="template">
+      </calendar>
+
+      <section class="upcoming-events" *ngIf="!this.loadView">
+        <div class="container" style="
+        display: flex;
+        justify-content: center;
+        padding: 20px;">
+          <span style="
+            font-size: 1.5em;
+            font-weight: 600;" *ngIf="this.mycostumarray.length < 1">
+            No Events on this Date
+          </span>
+        </div>
+        <div class="container">
+          <div class="events-wrapper" *ngFor="let tasklist of mycostumarray; let i = index"
+            style="border-bottom: 1px solid #585ae2;">
+            <ion-item-sliding class="animated flipInX delay-{{ i - 0.5 }}s">
+              <ion-item>
+                <div slot="start" style="display: flex;
+                  flex-direction: column;
+                  line-height: 1.4;
+                  font-size: 12px;
+                  margin: 0;
+                  padding: 0 15px 0 0;
+                  border-right: 1px dotted gray;">
+                  <span style="color: darkslateblue; font-weight: 600;">{{tasklist.HoursD}} :
+                    {{tasklist.MinutesD}}</span>
+                  <span style="color: darkslategray">{{tasklist.HoursDEnd}} : {{tasklist.MinutesDEnd}}</span>
+                </div>
+                <div slot="end" class="event" style="width: 100%"
+                  (click)="ActiveClick(tasklist.id_activity, tasklist.id_cam)">
+                  <h6 class="event__description" style="
+               text-align: center;
+               font-weight: 600;
+               color: darkorchid;" *ngIf="tasklist.status === 'PLAN'">{{tasklist.description}}</h6>
+                  <h6 class="event__description" style="
+               text-align: center;
+               font-weight: 600;
+               color: indianred;" *ngIf="tasklist.status === 'ACTUAL'">{{tasklist.description}}</h6>
+                  <p class="event__description">
+                    {{tasklist.nama_agency}}<br />
+                    {{tasklist.nama_brand}}
+                  </p>
+                  <div class="event__description">
+                    <span class="flag-report" *ngIf="tasklist.status === 'ACTUAL'">
+                      Report
+                    </span>
+                    <span class="flag-plan" *ngIf="tasklist.status === 'PLAN'">
+                      Plan
+                    </span>
+                    <span style="float: right;">
+                      {{tasklist.client}}
+                    </span>
+                  </div>
+                </div>
+              </ion-item>
+              <ion-item-options side="end">
+                <ion-item-option color="danger" (click)="deleteCam(tasklist.id_cam)">Delete</ion-item-option>
+              </ion-item-options>
+              <ion-item-options *ngIf="tasklist.status === 'PLAN'" side="start">
+                <ion-item-option color="primary" (click)="editCam(tasklist)">Report</ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+          </div>
+        </div>
+      </section>
+      <div *ngIf="this.loadView">
+        <ion-list>
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+              </h3>
+              <p>
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+              </h3>
+              <p>
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+              </h3>
+              <p>
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+              </h3>
+              <p>
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+              </h3>
+              <p>
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+              </h3>
+              <p>
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+    </section>
+  </div>
+  <div *ngIf="this.actionView === 2">
+    <section class="today-box" id="today-box" slot="fixed">
+      <span class="breadcrumb">Today</span>
+      <h3 class="date-title">{{showdate}}</h3>
+      <h3 class="date-title">{{showtime}}</h3>
+
+      <div class="plus-icon flash-button" routerLink="/addcam">
+        <ion-icon ios="ios-add" md="md-add"></ion-icon>
+      </div>
+    </section>
+    <section class="upcoming-events">
+      <div class="container" *ngFor="let task of mycostumarray | groupBy:'days' | pairs">
+        <h3>
+          {{task[0]}}
+        </h3>
+        <div class="events-wrapper" *ngFor="let tasklist of task[1]">
+          <div class="event" (click)="ActiveClick(this.number)">
+            <h6 class="event__point">{{tasklist.description}}</h6>
+            <span class="event__duration">{{tasklist.date}}</span>
+            <p class="event__description">
+              {{tasklist.nama_agency}}<br />
+              {{tasklist.nama_brand}}
+            </p>
+            <div class="event__description">
+              <span class="flag-report" *ngIf="tasklist.status === 'ACTUAL'">
+                Report
+              </span>
+              <span class="flag-plan" *ngIf="tasklist.status === 'PLAN'">
+                Plan
+              </span>
+              <span style="float: left;">
+                {{tasklist.client}}
+              </span>
+            </div>
+            <br>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ion-content>
+<ion-fab vertical="center" horizontal="center" slot="fixed" *ngIf="this.loadView">
+  <ion-fab-button>
+    <img [src]="'assets/img/loaded.gif'" style="display: flex; justify-content: center; align-items: center;" />
+  </ion-fab-button>
+</ion-fab>

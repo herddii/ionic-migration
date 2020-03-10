@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <div style="display: flex;">
+        <ion-buttons>
+          <ion-button (click)="gobacktoawalan()">
+            <ion-icon name="arrow-back" style="padding: 5px;
+                font-size: 1.8em; color: #000;"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </div>
+      <div style="display: flex; flex: 3">
+        <ion-searchbar placeholder="Search Client Handling" (ionChange)="searchclient($event)"></ion-searchbar>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-virtual-scroll [items]="myAm" approxItemHeight="320px">
+    <div *virtualItem="let item; let itemBounds = bounds;" style="display: flex; flex-direction: row; padding: 10px; margin: 15px;" (click)="gotoreimburse()">
+      <div style="display: flex; margin-right: 10px; align-items: center;">
+      <ion-thumbnail slot="start">
+        <ion-img [src]="setprofile(item)"></ion-img>
+      </ion-thumbnail>
+    </div>
+      <div style="display: flex; flex: 3; flex-direction: column; justify-content: center;">
+        <span style="font-size: 14px; font-weight: bold;">{{ item.name }}</span>
+        <span style="font-size: 10px; color: darkgray;">{{ item.USER_ID }}</span>
+        <span style="font-size: 10px; color: darkgray;">{{ item.BU_SHORT_NAME }}</span>
+  </div>
+</div>
+  </ion-virtual-scroll>
+  <!-- <div style="display: flex; justify-content: center; align-items: center;">
+    <span>Client</span>
+  </div> -->
+</ion-content>

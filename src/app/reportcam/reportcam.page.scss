@@ -1,0 +1,18 @@
+*, *::before, *::after {
+    font-family: Barlow Regular;
+} 
+
+.vertical-align {    
+    display: flex !important;
+    align-content: center !important;
+    align-items: center !important;
+}
+
+img {
+    display: block;
+    height: 60px;
+    width: 20%;
+    object-fit: cover !important;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    }

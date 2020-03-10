@@ -1,0 +1,70 @@
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="setBackground">
+  <ion-fab-button (click)="scrollToTop()" color="light">
+    <ion-icon style="font-size: 1.5rem;" name="arrow-round-up" color="primary"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-content #Content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <div style="display: flex; flex-direction: column;" *ngFor="let i of item">
+    <div style="display: flex; flex-direction: row; justify-content: space-between; margin: 10px">
+    <div (click)="goback()">
+      <ion-icon style="display: flex; justify-content: flex-start; color: rgb(10, 1, 65)" src="assets/icon/back.svg"></ion-icon>
+    </div>
+    <div style="flex: 1; 
+    justify-content: center;
+    align-items: center;
+    display: flex;">
+      <img [src]="setimage(i)" style="width: 200px; height: 200px;">
+    </div>
+
+    <div (click)="goedit(i)">
+      <ion-icon style="display: flex; justify-content: flex-start; color: rgb(10, 1, 65)"  src="assets/icon/document.svg"></ion-icon>
+        <ion-icon *ngIf="i.myclient === 'yes'" src="assets/icon/add.svg" style="color: yellowgreen" ></ion-icon>
+    </div>
+  </div>
+    <div class="nama">
+      <span>{{this.setname(i)}}</span>
+      <p style="margin: 0px;">{{i.position}}</p>
+    </div>
+    <div style="display: flex; flex-direction: row; justify-content: center;">
+      <ion-icon name="logo-facebook" [ngClass]="{'active-fb': i.facebook, 'notactive': !i.facebook}"></ion-icon>
+      <ion-icon name="logo-twitter" [ngClass]="{'active-twitter': i.twitter, 'notactive': !i.twitter}"></ion-icon>
+      <ion-icon src="assets/icon/instagram.svg" *ngIf="i.instagram"></ion-icon>
+      <ion-icon name="logo-instagram" *ngIf="!i.instagram" class="notactive"></ion-icon>
+      <ion-icon name="logo-linkedin" [ngClass]="{'active-linkedin': i.linkedin, 'notactive': !i.linkedin}"></ion-icon>
+      <ion-icon name="share"></ion-icon>
+    </div>
+    <div class="card"> 
+      <span style="font-weight: bold;">Behaviour</span>
+      <div class="body-card">
+        <span>You are not adding behaviour yet</span>
+      </div>
+    </div>
+    <div class="card-bottom"> 
+      <span style="font-weight: bold; font-size: 14px; text-transform: capitalize;">Other clients in {{i.company}}</span>
+    </div>
+  </div>
+  <ion-searchbar placeholder="Search Client Handling" (ionChange)="searchclient($event)"></ion-searchbar>
+  <ion-virtual-scroll [items]="listclientcompany" approxItemHeight="320px">
+    <div *virtualItem="let item; let itemBounds = bounds;"
+      style="display: flex; flex-direction: row; padding: 10px; margin: 15px;" (click)="seeprofile(item)" class="ion-activatable">
+      <div style="display: flex; margin-right: 10px; align-items: center;" >
+        <ion-thumbnail slot="start">
+          <ion-img [src]="setimage(item)"></ion-img>
+        </ion-thumbnail>
+      </div>
+      <div style="display: flex; flex: 3; flex-wrap: nowrap; flex-direction: column; justify-content: center;">
+        <span style="font-size: 14px; font-weight: bold;">{{ this.setname(item) }}</span>
+        <span style="font-size: 10px; color: darkgray;">{{ this.setposition(item) }}</span>
+      </div>
+      <div style="white-space: nowrap; display: flex; align-items: center;">
+        <ion-buttons>
+          <ion-button (click)="email(item)">
+            <ion-icon src="assets/icon/arrow.svg"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </div>
+      <ion-ripple-effect></ion-ripple-effect>
+    </div>
+  </ion-virtual-scroll>
+</ion-content>

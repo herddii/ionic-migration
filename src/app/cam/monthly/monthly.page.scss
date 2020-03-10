@@ -1,0 +1,96 @@
+.upcoming-events {
+  padding: 10px;
+   .container {
+      h3 {
+         color: #333;
+         font-size: 17px;
+         margin-bottom: 30px;
+         position: relative;
+         &::before {
+            content: "";
+            display: block;
+            width: 58%;
+            height: 2px;
+            background-color: #e8e8e8;
+            position: absolute;
+            top: 60%;
+            transform: translatey(-60%);
+            right: 0;
+         }
+      }
+      .events-wrapper {
+         margin-bottom: 30px;
+         .event {
+            border-bottom: 1px solid #e8e8e8;
+            position: relative;
+            margin-bottom: 25px;
+            padding-left:30px;
+            cursor: pointer;
+            i {
+               font-size: 24px;
+               font-weight: 100;
+               position: absolute;
+               left: 0;
+               top: -4px;
+            }
+            .flag-report{
+              background: #f04141;
+              padding: 5px 10px 5px 10px;
+              border-radius: 10px;
+              color: white;
+           }
+           .flag-plan{
+              background: #3880ff;
+              padding: 5px 10px 5px 10px;
+              border-radius: 10px;
+              color: white;
+           }
+            .event__point {
+               margin: 0;
+               color: #555;
+               font: {
+                  size: 15px;
+                  weight: 800;
+               }
+               letter-spacing: 1px;
+            }
+            .event__duration {
+               position: absolute;
+               top: 5px;
+               right: 0;
+               color: #999;
+               font: {
+                  size: 10px;
+                  weight: 800;
+                  style: italic;
+               }
+            }
+            .event__description {
+               margin-top: 10px;
+               color: #919294;
+               font-size: 13px;
+               font-weight: 300;
+
+            }
+            &.active {
+               i {
+                  position: absolute;
+                  left: 25px;
+                  top: 17px;
+               }  
+               .event__description {
+                  &::before {
+                     right: 45px;
+                     font-size: 22px;
+                     transition: all 550ms ease;
+                     transition-timing-function: cubic-bezier(0.05,1.8,1,1.57);
+                  }
+               }
+               &:hover .event__description::before {
+                  transform: translate(15px, -12px);
+               }
+            }
+         }
+      }
+   }
+}

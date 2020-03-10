@@ -1,0 +1,290 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start" style="margin: 0px;" (click)="gotosaleskit()">
+          <ion-icon name="close" style="font-size: 24px;
+          padding: 5px;
+          font-weight: 800;"></ion-icon>
+        </ion-buttons>
+    <span style="display: flex;
+    justify-content: center;">{{this.username}}</span>
+    <ion-buttons slot="end" (click)="addEvent()">
+      <ion-icon name="checkmark" style="font-size: 24px;
+    padding: 5px;
+    font-weight: 800;"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-segment (ionChange)="segmentChanged($event)" style="background-color: #fff;" slot="fixed">
+  <ion-segment-button value="Details" checked>
+    <ion-label>Detail</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="entertainment">
+    <ion-label>Entertainment</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="File">
+    <ion-label>File</ion-label>
+  </ion-segment-button>
+</ion-segment>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="this.segmentChoose === 'Details'">
+    <ion-card style="border-radius: 0px; margin-bottom: 15px;">
+      <ion-item>
+        <ion-input type="text" placeholder="Subject" [(ngModel)]="subject"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="Description" [(ngModel)]="desc"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" placeholder="Potency Revenue" [(ngModel)]="potency"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-input type="text" placeholder="Location" [(ngModel)]="location"></ion-input>
+        </ion-item>
+      <ion-item>
+        <ion-label slot="start" style="font-size: 12px;">Activity</ion-label>
+        <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+        [(ngModel)]="activity"
+        [items]="activ"
+        placeholder="Tap Me !"
+        itemValueField="id"
+        itemTextField="text"
+        [canSearch]="false"
+        [hasVirtualScroll]="true"
+        (onChange)="actChange($event)">
+      </ionic-selectable>
+      </ion-item>
+      <ion-item>
+        <ion-label slot="start" style="font-size: 12px;">Activity Type</ion-label>
+        <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+        [(ngModel)]="typeact"
+        [items]="typeActs"
+        placeholder="Tap Me !"
+        itemValueField="id"
+        itemTextField="text"
+        [canSearch]="true"
+        [hasVirtualScroll]="true"
+        (onChange)="actChange($event)">
+      </ionic-selectable>
+    </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item>
+        <ion-col size="4">
+          <ion-label style="font-size: 12px;">From</ion-label>
+        </ion-col>
+        <ion-col size="4">
+          <ion-datetime displayFormat="YYYY MMM, DD" style="font-size: 12px; text-align: right;" placeholder="Date" [(ngModel)]="startdate"></ion-datetime>
+        </ion-col>
+        <ion-col size="4">
+          <ion-datetime displayFormat="HH:mm" style="font-size: 12px; text-align: right;" placeholder="Time" [(ngModel)]="startTime"></ion-datetime>
+        </ion-col>
+      </ion-item>
+      <ion-item>
+        <ion-col size="4">
+          <ion-label style="font-size: 12px;">To</ion-label>
+        </ion-col>
+        <ion-col size="4">
+          <ion-datetime displayFormat="YYYY MMM, DD" style="font-size: 12px; text-align: right;" (ionChange)="dateChanged_end($event)" placeholder="Date" [(ngModel)]="this.startdate"></ion-datetime>
+        </ion-col>
+        <ion-col size="4">
+          <ion-datetime displayFormat="HH:mm" style="font-size: 12px; text-align: right;" [(ngModel)]="endTime" placeholder="Time"></ion-datetime>
+        </ion-col>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item>
+        <ion-label slot="start" style="font-size: 12px;">PIC AM</ion-label>
+        <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+        [(ngModel)]="picam"
+        [items]="ports"
+        placeholder="Tap Me !"
+        itemValueField="id"
+        itemTextField="text"
+        [canSearch]="true"
+        [hasVirtualScroll]="true"
+        (onChange)="picamChange($event)">
+      </ionic-selectable>
+      </ion-item>
+      <ion-item>
+        <ion-label slot="start" style="font-size: 12px;">Partners</ion-label>
+        <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+        [(ngModel)]="partner"
+        [items]="partners"
+        [isMultiple]="true"
+        placeholder="Partner"
+        itemValueField="id"
+        itemTextField="text"
+        [canSearch]="true"
+        [hasVirtualScroll]="true"
+        (onChange)="portChange($event)">
+      </ionic-selectable>
+      </ion-item>
+      <ion-item>
+        <ion-label slot="start" style="font-size: 12px;">Agency</ion-label>
+        <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+        [(ngModel)]="agency"
+        [items]="agencys"
+        [disabled]="disableAgency"
+        placeholder="Tap Me !"
+        itemValueField="id"
+        itemTextField="text"
+        [canSearch]="true"
+        [hasVirtualScroll]="true"
+        (onChange)="agencyChange($event)">
+      </ionic-selectable>
+      </ion-item>
+      <ion-item>
+        <ion-label slot="start" style="font-size: 12px;">Advertiser</ion-label>
+        <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+        [(ngModel)]="advertiser"
+        placeholder="Tap Me !"
+        [disabled]="disableAdv"
+        [items]="advertisers"
+        itemValueField="id"
+        itemTextField="text"
+        [canSearch]="true"
+        (onChange)="advertiserChange($event)">
+      </ionic-selectable>
+      </ion-item>
+      <ion-item>
+        <ion-label slot="start" style="font-size: 12px;">Brand</ion-label>
+        <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+        [(ngModel)]="brand"
+        [items]="brands"
+        [disabled]="disableBrand"
+        placeholder="Tap Me !"
+        itemValueField="id"
+        itemTextField="text"
+        [canSearch]="true"
+        (onChange)="brandChange($event)">
+      </ionic-selectable>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="Brand Variant" [disabled]="disableVariant" [(ngModel)]="variant"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label slot="start" style="font-size: 12px;">Client</ion-label>
+          <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+          [(ngModel)]="client"
+          [items]="clients"
+          [isMultiple]="true"
+          placeholder="Client"
+          itemValueField="id_client_account"
+          itemTextField="text"
+          [canSearch]="true"
+          [hasVirtualScroll]="true"
+          (onChange)="clientChange($event)">
+        </ionic-selectable>
+        </ion-item>
+    </ion-card>
+  </div>
+  <div *ngIf="this.segmentChoose === 'entertainment'">
+    <div *ngFor="let in of [].constructor(counting); let i = index">
+      <span *ngIf="counting == 1" style="display: flex; justify-content: center; color: #787d7d; padding: 5px;">There is no entertainment added !</span>
+      <ion-list *ngIf="i > 0">
+        <ion-item-sliding>
+          <ion-item style="padding: 0px; margin: 0px;">
+            <ion-card style="margin: 0px; padding: 0px;">
+              <ion-item>
+                <ion-input placeholder="Title" [(ngModel)]="titleEntertainment[i-1]"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label slot="start" style="font-size: 12px;">Cost By</ion-label>
+                <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+                [(ngModel)]="partnerEntertainment[i-1]"
+                [items]="partners"
+                placeholder="Tap Me !"
+                itemValueField="id"
+                itemTextField="text"
+                [canSearch]="true"
+                [hasVirtualScroll]="true"
+                (onChange)="portChange($event)">
+              </ionic-selectable>
+            </ion-item>
+            <ion-item>
+              <ion-input placeholder="Entertainment Amount Ex : 200000" [(ngModel)]="hargaEntertainment[i-1]" type="number"></ion-input>
+            </ion-item>
+            <ion-item>
+              <div class="file-upload">
+                  <img *ngIf="images[i-1]" src="{{images[i-1].path}}"/>
+                  <ion-button *ngIf="!images[i-1]" fill="clear" expand="full" color="light" (click)="readImage()">
+                      <ion-icon slot="start" name="camera"></ion-icon>
+                      Select Image</ion-button>
+              </div>
+            </ion-item>
+            <ion-item>
+              <ion-input placeholder="Description" [(ngModel)]="descEntertainment[i-1]"></ion-input>
+            </ion-item>
+          </ion-card>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option (click)="deleteRow()" color="danger">
+            <ion-icon name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+</div>
+<div *ngIf="this.segmentChoose === 'File'">
+  <ion-item>
+    <ion-label slot="start" style="font-size: 12px;">Module</ion-label>
+    <ion-select style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end" (ionChange)="getmodule($event)" [(ngModel)]="modultype">
+      <ion-select-option value="slskt_prog">Saleskit Program</ion-select-option>
+      <ion-select-option value="slskt_rate">Saleskit Ratecard</ion-select-option>
+      <ion-select-option value="slskt_spc">Saleskit Special Offer</ion-select-option>
+      <ion-select-option value="sam_concept">SAM Concept</ion-select-option>
+      <ion-select-option value="sam_packet">SAM Paket</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label slot="start" style="font-size: 12px;">Program Name</ion-label>
+    <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+    [(ngModel)]="programName"
+    [items]="progName"
+    placeholder="Tap Me !"
+    itemValueField="id_program_periode"
+    itemTextField="program_name"
+    [canSearch]="true"
+    [hasVirtualScroll]="true"
+    (onChange)="progNameChange($event)">
+  </ionic-selectable>
+  </ion-item>
+  <ion-item (click)="selectFile()" [disabled]="selectfile">
+      <ion-label slot="start" style="font-size: 12px;">Select File</ion-label>
+      <ion-icon slot="end" name="ios-arrow-forward"></ion-icon>
+    </ion-item>
+  <span class="choose_file" *ngIf="this.selectedfile.length > 1">You Choose {{this.selectedfile.length}} Files</span>
+  <span class="choose_file" *ngIf="this.selectedfile.length < 1">No File Chosen</span>
+  <ion-slides pager="false" [options]="slidesOpts" *ngIf="this.selectedfile.length > 0">
+    <ion-slide *ngFor="let file of selectedfile">
+          <ion-card (click)="goTo(file)">
+            <img *ngIf="file.content_file_download.toLowerCase().lastIndexOf('.jpg') > -1 || file.content_file_download.toLowerCase().lastIndexOf('.jpeg') > -1" [src]="'http://mncmediakit.com/datafile/thumbnail/'+file.id_filetype+'/'+file.content_file_download">
+            <img *ngIf="file.content_file_download.toLowerCase().lastIndexOf('.xls') > -1 || file.content_file_download.toLowerCase().lastIndexOf('.xlsx') > -1" [src]="'assets/img/xls.jpg'">
+            <img *ngIf="file.content_file_download.toLowerCase().lastIndexOf('.pdf') > -1" [src]="'assets/img/pdf.jpg'">
+            <img *ngIf="file.content_file_download.toLowerCase().lastIndexOf('.ppt') > -1 || file.content_file_download.toLowerCase().lastIndexOf('.pptx') > -1" [src]="'assets/img/PPT.jpg'">
+            <!-- <ion-button fill="outline" slot="end">{}</ion-button> -->
+            <ion-card-content style="text-align: left;">
+              <h2 style="
+              font-size: 11px;
+              font-weight: 600;">{{file.content_title}}</h2>
+              <h3 style="
+              font-size: 9px;
+              font-weight: 400;">{{file.updated_at}}</h3>
+            </ion-card-content>
+          </ion-card>
+    </ion-slide>
+  </ion-slides>
+  <ion-buttons *ngIf="this.selectedfile.length > 1" (click)="deleteFile()" style="justify-content: center;">
+    <ion-icon name="trash" style="font-size: 24px;
+  padding: 5px;
+  font-weight: 800; color: red"></ion-icon>
+  </ion-buttons>
+  </div>
+</ion-content>
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="this.segmentChoose === 'entertainment'">
+<ion-fab-button>
+<ion-icon name="add" (click)="addRow()"></ion-icon>
+</ion-fab-button>
+</ion-fab>

@@ -1,0 +1,312 @@
+<ion-header>
+    <ion-toolbar class="saleskit-background-color">
+            <ion-item lines="none" class="saleskit-background-color">
+                <ion-buttons slot="start" style="margin: 0px;" (click)="gotosaleskit()">
+                    <ion-icon name="ios-arrow-back" color="light"></ion-icon>&nbsp;<span style="color: white;">Back</span>
+                  </ion-buttons>
+              <ion-searchbar (ionInput)="searchbar($event)" mode="md"></ion-searchbar>
+              <!-- <ion-input (ionInput)="searchbar($event)" style="border: 0.5px solid grey;
+              /* border-radius: 8px; padding: 10px;" placeholder='Search Menu'></ion-input> */ -->
+              <!-- <ion-icon slot="end" (click)="searchbegin()" *ngIf="this.a == 0" src="assets/icon/magnifier.svg"></ion-icon> -->
+              <ion-icon slot="end" ios="ios-notifications" md="md-notifications"></ion-icon>
+            </ion-item>
+    </ion-toolbar>
+  </ion-header>
+  <ion-segment mode="md" scrollable (ionChange)="segmentChanged($event)" style="background-color: #fff; z-index: 999;" color="saleskit" slot="fixed">
+      <ion-segment-button mode="md" value="all" checked>
+        <ion-label>All</ion-label>
+      </ion-segment-button>
+      <ion-segment-button mode="md" value="program">
+        <ion-label>Program</ion-label>
+      </ion-segment-button>
+      <ion-segment-button mode="md" value="ratecard">
+        <ion-label>Ratecard</ion-label>
+      </ion-segment-button>
+      <ion-segment-button mode="md" value="specialoffers">
+          <ion-label>Specialoffers</ion-label>
+        </ion-segment-button>
+        <ion-segment-button mode="md" value="performance">
+            <ion-label>Performance</ion-label>
+          </ion-segment-button>
+          <ion-segment-button mode="md" value="benefit">
+              <ion-label>Benefit</ion-label>
+            </ion-segment-button>
+    </ion-segment>
+    <div class="scrolling-wrapper" style="z-index: 999; background-color: white; padding: 15px;" *ngIf="this.segmentChoose === 'program'">
+        <ion-buttons style="margin: 0px;">
+            <!-- <ion-icon name="ios-arrow-back" color="light"></ion-icon>&nbsp;<span style="color: white;">Back</span> -->
+            <ion-button [ngClass]="{'active-class':activebutton === gen.id_genre, 'not-active-class': activebutton !== gen.id_genre}" *ngFor="let gen of genre" (click)="active(gen.id_genre)">{{gen.genre_name}}</ion-button>
+          </ion-buttons>
+    </div>
+  <ion-content #pageContent fullscreen [scrollEvents]="true" (ionScroll)="onScroll($event)">
+    <div *ngIf="this.segmentChoose === 'all'">
+      <div *ngIf="items.length > 0">
+    <ion-list *ngFor="let item of items | groupBy:'week' | pairs">
+        <ion-list-header>
+            <ion-label>Week {{item[0]}}</ion-label>
+          </ion-list-header>
+      <ion-item lines="none" *ngFor="let item of item[1]" style="margin: 5px;" (click)="gotowhere(item)">
+        <img slot="start" *ngIf="item.content_file_download.toLowerCase().lastIndexOf('.jpg') > -1 
+        || item.content_file_download.toLowerCase().lastIndexOf('.png') > - 1 
+        || item.content_file_download.toLowerCase().lastIndexOf('.jpeg') > -1" [src]="'http://mncmediakit.com/datafile/thumbnail/'+item.id_filetype+'/'+item.content_file_download">
+        <img slot="start" *ngIf="item.content_file_download.toLowerCase().lastIndexOf('.xls') > -1 
+        || item.content_file_download.toLowerCase().lastIndexOf('.xlsx') > -1" [src]="'assets/img/xls.jpg'">
+          <img slot="start" *ngIf="item.content_file_download.toLowerCase().lastIndexOf('.pdf') > -1" [src]="'assets/img/pdf.jpg'">
+          <img slot="start" *ngIf="item.content_file_download.toLowerCase().lastIndexOf('.ppt') > -1 || item.content_file_download.toLowerCase().lastIndexOf('.pptx') > -1" [src]="'assets/img/PPT.jpg'">
+        <div style="margin: 0px; display: flex; flex-direction: column; font-size: 9px; line-height: 1.5;">
+          <span style="font-weight: 600;">{{item.title}}&nbsp;&nbsp;{{item.title_name}}</span>
+          <span style="font-weight: 400;">{{item.filetype_name}}</span>
+          <span style="font-weight: 200;">{{item.BU_SHORT_NAME}}</span>
+          <span style="font-weight: 200; color: gray;">{{item.updated_at}}</span>
+        </div>
+      </ion-item>
+    </ion-list>
+  </div>
+  <!-- <ion-content *ngIf="this.loadbenefit"> -->
+      <ion-fab vertical="center" horizontal="center" slot="fixed" *ngIf="loadata">
+          <ion-fab-button>
+            <img [src]="'assets/img/loaded.gif'" style="display: flex; justify-content: center; align-items: center;" />
+          </ion-fab-button>
+        </ion-fab>
+  <!-- </ion-content> -->
+  </div>
+
+  <div *ngIf="this.segmentChoose === 'program'">
+    <div *ngIf="programItem.length >0">
+      <ion-list *ngFor="let prg of programItem">
+          <ion-list-header>
+              <ion-label>
+                <span style="font-weight: 600; font-size: 12px;">{{prg.program.program_name}}</span>&nbsp;:&nbsp;
+                <span style="font-weight: 400; font-style: italic; font-size: 11px;">{{prg.program.genre.genre_name}}</span></ion-label>
+            </ion-list-header>
+        <ion-item lines="none" *ngFor="let m of prg.hotspot" style="margin: 5px;" (click)="gotowhere(m)">
+          <img slot="start" *ngIf="m.content_file_download.toLowerCase().lastIndexOf('.jpg') > -1 
+          || m.content_file_download.toLowerCase().lastIndexOf('.png') > - 1 
+          || m.content_file_download.toLowerCase().lastIndexOf('.jpeg') > -1" [src]="'http://mncmediakit.com/datafile/thumbnail/'+m.id_filetype+'/'+m.content_file_download">
+          <img slot="start" *ngIf="m.content_file_download.toLowerCase().lastIndexOf('.xls') > -1 
+          || m.content_file_download.toLowerCase().lastIndexOf('.xlsx') > -1" [src]="'assets/img/xls.jpg'">
+            <img slot="start" *ngIf="m.content_file_download.toLowerCase().lastIndexOf('.pdf') > -1" [src]="'assets/img/pdf.jpg'">
+            <img slot="start" *ngIf="m.content_file_download.toLowerCase().lastIndexOf('.ppt') > -1 || m.content_file_download.toLowerCase().lastIndexOf('.pptx') > -1" [src]="'assets/img/PPT.jpg'">
+          <div style="margin: 0px; display: flex; flex-direction: column; font-size: 9px; line-height: 1.5;">
+            <span style="font-weight: 600;">{{m.content_title}}</span>
+            <span style="font-weight: 400;">{{prg.program.genre.genre_name}}</span>
+            <span style="font-weight: 200;">{{m.filetype.filetype_name}}</span>
+            <span style="font-weight: 400;">{{prg.program.bu.bu_short_name}}</span>
+            <span style="font-weight: 200; color: gray;">{{prg.updated_at}}</span>
+          </div>
+        </ion-item>
+        <ion-item lines="none" *ngFor="let m_paket of prg.paket" style="margin: 5px;" (click)="gotowhere(m_paket)">
+            <img slot="start" *ngIf="m_paket.content_file_download.toLowerCase().lastIndexOf('.jpg') > -1 
+            || m_paket.content_file_download.toLowerCase().lastIndexOf('.png') > - 1 
+            || m_paket.content_file_download.toLowerCase().lastIndexOf('.jpeg') > -1" [src]="'http://mncmediakit.com/datafile/thumbnail/'+m_paket.id_filetype+'/'+m_paket.content_file_download">
+            <img slot="start" *ngIf="m_paket.content_file_download.toLowerCase().lastIndexOf('.xls') > -1 
+            || m_paket.content_file_download.toLowerCase().lastIndexOf('.xlsx') > -1" [src]="'assets/img/xls.jpg'">
+              <img slot="start" *ngIf="m_paket.content_file_download.toLowerCase().lastIndexOf('.pdf') > -1" [src]="'assets/img/pdf.jpg'">
+              <img slot="start" *ngIf="m_paket.content_file_download.toLowerCase().lastIndexOf('.ppt') > -1 || m_paket.content_file_download.toLowerCase().lastIndexOf('.pptx') > -1" [src]="'assets/img/PPT.jpg'">
+            <div style="margin: 0px; display: flex; flex-direction: column; font-size: 9px; line-height: 1.5;">
+              <span style="font-weight: 600;">{{m_paket.content_title}}</span>
+              <span style="font-weight: 400;">{{prg.program.genre.genre_name}}</span>
+              <span style="font-weight: 200;">{{m_paket.filetype.filetype_name}}</span>
+              <span style="font-weight: 400;">{{prg.program.bu.bu_short_name}}</span>
+              <span style="font-weight: 200; color: gray;">{{prg.updated_at}}</span>
+            </div>
+          </ion-item>
+          <ion-item lines="none" *ngFor="let m_presentation of prg.presentation" style="margin: 5px;" (click)="gotowhere(m_presentation)">
+              <img slot="start" *ngIf="m_presentation.content_file_download.toLowerCase().lastIndexOf('.jpg') > -1 
+              || m_presentation.content_file_download.toLowerCase().lastIndexOf('.png') > - 1 
+              || m_presentation.content_file_download.toLowerCase().lastIndexOf('.jpeg') > -1" [src]="'http://mncmediakit.com/datafile/thumbnail/'+m_presentation.id_filetype+'/'+m_presentation.content_file_download">
+              <img slot="start" *ngIf="m_presentation.content_file_download.toLowerCase().lastIndexOf('.xls') > -1 
+              || m_presentation.content_file_download.toLowerCase().lastIndexOf('.xlsx') > -1" [src]="'assets/img/xls.jpg'">
+                <img slot="start" *ngIf="m_presentation.content_file_download.toLowerCase().lastIndexOf('.pdf') > -1" [src]="'assets/img/pdf.jpg'">
+                <img slot="start" *ngIf="m_presentation.content_file_download.toLowerCase().lastIndexOf('.ppt') > -1 || m_presentation.content_file_download.toLowerCase().lastIndexOf('.pptx') > -1" [src]="'assets/img/PPT.jpg'">
+              <div style="margin: 0px; display: flex; flex-direction: column; font-size: 9px; line-height: 1.5;">
+                <span style="font-weight: 600;">{{m_presentation.content_title}}</span>
+                <span style="font-weight: 400;">{{prg.program.genre.genre_name}}</span>
+                <span style="font-weight: 200;">{{m_presentation.filetype.filetype_name}}</span>
+                <span style="font-weight: 400;">{{prg.program.bu.bu_short_name}}</span>
+                <span style="font-weight: 200; color: gray;">{{prg.updated_at}}</span>
+              </div>
+            </ion-item>
+      </ion-list>
+    </div>
+      <ion-fab vertical="center" horizontal="center" slot="fixed" *ngIf="loadata">
+          <ion-fab-button>
+            <img [src]="'assets/img/loaded.gif'" style="display: flex; justify-content: center; align-items: center;" />
+          </ion-fab-button>
+        </ion-fab>
+    </div>
+
+    <div *ngIf="this.segmentChoose === 'ratecard'">
+      <div *ngIf="ratecard.length > 0">
+      <ion-list *ngFor="let rate of ratecard">
+          <ion-list-header>
+              <ion-label>
+                {{rate.title}}</ion-label>
+            </ion-list-header>
+        <ion-item lines="none" style="margin: 5px;" (click)="gotowhere(rate.content)">
+          <img slot="start" *ngIf="rate.content.content_file_download.toLowerCase().lastIndexOf('.jpg') > -1 
+          || rate.content.content_file_download.toLowerCase().lastIndexOf('.png') > - 1 
+          || rate.content.content_file_download.toLowerCase().lastIndexOf('.jpeg') > -1" [src]="'http://mncmediakit.com/datafile/thumbnail/'+rate.content.id_filetype+'/'+rate.content.content_file_download">
+          <img slot="start" *ngIf="rate.content.content_file_download.toLowerCase().lastIndexOf('.xls') > -1 
+          || rate.content.content_file_download.toLowerCase().lastIndexOf('.xlsx') > -1" [src]="'assets/img/xls.jpg'">
+            <img slot="start" *ngIf="rate.content.content_file_download.toLowerCase().lastIndexOf('.pdf') > -1" [src]="'assets/img/pdf.jpg'">
+            <img slot="start" *ngIf="rate.content.content_file_download.toLowerCase().lastIndexOf('.ppt') > -1 || rate.content.content_file_download.toLowerCase().lastIndexOf('.pptx') > -1" [src]="'assets/img/PPT.jpg'">
+          <div style="margin: 0px; display: flex; flex-direction: column; font-size: 9px; line-height: 1.5;">
+            <span style="font-weight: 600;">{{rate.content.content_title}}</span>
+            <span style="font-weight: 200;">{{rate.content.filetype.filetype_name}}</span>
+            <span style="font-weight: 400;">{{rate.content.bu.bu_short_name}}</span>
+            <span style="font-weight: 200; color: gray;">{{rate.updated_at}}</span>
+          </div>
+        </ion-item>
+        <ion-item lines="none" *ngFor="let ratepdf of rate.ratepdf" style="margin: 5px;" (click)="gotowhere(ratepdf)">
+            <img slot="start" *ngIf="ratepdf.content_file_download.toLowerCase().lastIndexOf('.jpg') > -1 
+            || ratepdf.content_file_download.toLowerCase().lastIndexOf('.png') > - 1 
+            || ratepdf.content_file_download.toLowerCase().lastIndexOf('.jpeg') > -1" [src]="'http://mncmediakit.com/datafile/thumbnail/'+ratepdf.id_filetype+'/'+ratepdf.content_file_download">
+            <img slot="start" *ngIf="ratepdf.content_file_download.toLowerCase().lastIndexOf('.xls') > -1 
+            || ratepdf.content_file_download.toLowerCase().lastIndexOf('.xlsx') > -1" [src]="'assets/img/xls.jpg'">
+              <img slot="start" *ngIf="ratepdf.content_file_download.toLowerCase().lastIndexOf('.pdf') > -1" [src]="'assets/img/pdf.jpg'">
+              <img slot="start" *ngIf="ratepdf.content_file_download.toLowerCase().lastIndexOf('.ppt') > -1 || ratepdf.content_file_download.toLowerCase().lastIndexOf('.pptx') > -1" [src]="'assets/img/PPT.jpg'">
+            <div style="margin: 0px; display: flex; flex-direction: column; font-size: 9px; line-height: 1.5;">
+              <span style="font-weight: 600;">{{ratepdf.content_title}}</span>
+              <span style="font-weight: 200;">{{ratepdf.filetype.filetype_name}}</span>
+              <span style="font-weight: 400;">{{ratepdf.bu.bu_short_name}}</span>
+              <span style="font-weight: 200; color: gray;">{{rate.updated_at}}</span>
+            </div>
+          </ion-item>
+      </ion-list>
+    </div>
+      <ion-fab vertical="center" horizontal="center" slot="fixed" *ngIf="loadata">
+          <ion-fab-button>
+            <img [src]="'assets/img/loaded.gif'" style="display: flex; justify-content: center; align-items: center;" />
+          </ion-fab-button>
+        </ion-fab>
+    </div>
+
+    <div *ngIf="this.segmentChoose === 'specialoffers'">
+      <div *ngIf="specialof.length > 0">
+      <ion-list *ngFor="let spc of specialof">
+          <ion-list-header>
+              <ion-label>
+                {{spc.title}}</ion-label>
+            </ion-list-header>
+        <ion-item lines="none" style="margin: 5px;" (click)="gotowhere(spc.content)">
+          <img slot="start" *ngIf="spc.content.content_file_download.toLowerCase().lastIndexOf('.jpg') > -1 
+          || spc.content.content_file_download.toLowerCase().lastIndexOf('.png') > - 1 
+          || spc.content.content_file_download.toLowerCase().lastIndexOf('.jpeg') > -1" [src]="'http://mncmediakit.com/datafile/thumbnail/'+spc.content.id_filetype+'/'+spc.content.content_file_download">
+          <img slot="start" *ngIf="spc.content.content_file_download.toLowerCase().lastIndexOf('.xls') > -1 
+          || spc.content.content_file_download.toLowerCase().lastIndexOf('.xlsx') > -1" [src]="'assets/img/xls.jpg'">
+            <img slot="start" *ngIf="spc.content.content_file_download.toLowerCase().lastIndexOf('.pdf') > -1" [src]="'assets/img/pdf.jpg'">
+            <img slot="start" *ngIf="spc.content.content_file_download.toLowerCase().lastIndexOf('.ppt') > -1 || spc.content.content_file_download.toLowerCase().lastIndexOf('.pptx') > -1" [src]="'assets/img/PPT.jpg'">
+          <div style="margin: 0px; display: flex; flex-direction: column; font-size: 9px; line-height: 1.5;">
+            <span style="font-weight: 600;">{{spc.content.content_title}}</span>
+            <span style="font-weight: 200;">{{spc.content.filetype.filetype_name}}</span>
+            <span style="font-weight: 400;">{{spc.content.bu.bu_short_name}}</span>
+            <span style="font-weight: 200; color: gray;">{{spc.updated_at}}</span>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+    <ion-fab vertical="center" horizontal="center" slot="fixed" *ngIf="loadata">
+        <ion-fab-button>
+          <img [src]="'assets/img/loaded.gif'" style="display: flex; justify-content: center; align-items: center;" />
+        </ion-fab-button>
+      </ion-fab>
+    </div>
+
+    <div *ngIf="this.segmentChoose === 'performance'">
+      <div *ngIf="performance.length > 0">
+      <ion-list *ngFor="let prfm of performance | groupBy:'week' | pairs">
+          <ion-list-header>
+              <ion-label>
+                Week&nbsp;{{prfm[0]}}</ion-label>
+            </ion-list-header>
+        <ion-item lines="none" *ngFor="let prfman of prfm[1]" style="margin: 5px;" (click)="gotowhere(prfman)">
+          <img slot="start" *ngIf="prfman.content_file_download.toLowerCase().lastIndexOf('.jpg') > -1 
+          || prfman.content_file_download.toLowerCase().lastIndexOf('.png') > - 1 
+          || prfman.content_file_download.toLowerCase().lastIndexOf('.jpeg') > -1" [src]="'http://mncmediakit.com/datafile/thumbnail/'+prfman.id_filetype+'/'+prfman.content_file_download">
+          <img slot="start" *ngIf="prfman.content_file_download.toLowerCase().lastIndexOf('.xls') > -1 
+          || prfman.content_file_download.toLowerCase().lastIndexOf('.xlsx') > -1" [src]="'assets/img/xls.jpg'">
+            <img slot="start" *ngIf="prfman.content_file_download.toLowerCase().lastIndexOf('.pdf') > -1" [src]="'assets/img/pdf.jpg'">
+            <img slot="start" *ngIf="prfman.content_file_download.toLowerCase().lastIndexOf('.ppt') > -1 || prfman.content_file_download.toLowerCase().lastIndexOf('.pptx') > -1" [src]="'assets/img/PPT.jpg'">
+          <div style="margin: 0px; display: flex; flex-direction: column; font-size: 9px; line-height: 1.5;">
+            <span style="font-weight: 600;">{{prfman.title}}</span>
+            <span style="font-weight: 200;">{{prfman.filetype_name}}</span>
+            <span style="font-weight: 400;">{{prfman.BU_SHORT_NAME}}</span>
+            <span style="font-weight: 200; color: gray;">{{prfman.updated_at}}</span>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+    <ion-fab vertical="center" horizontal="center" slot="fixed" *ngIf="loadata">
+        <ion-fab-button>
+          <img [src]="'assets/img/loaded.gif'" style="display: flex; justify-content: center; align-items: center;" />
+        </ion-fab-button>
+      </ion-fab>
+    </div>
+
+    <div *ngIf="this.segmentChoose === 'benefit'" style="padding: 3px;">
+        <vg-player style="justify-content: center; background-color: #b4b3b4 !important;">
+            <video style="width: 60%; height: auto;" [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
+                <source src="http://mncmediakit.com/video/benefit.mp4" type="video/mp4">
+            </video>
+        </vg-player>
+        <ion-segment mode="md" scrollable (ionChange)="segmentChangeBenefit($event)" style="background-color: #fff; z-index: 999;" color="saleskit" slot="fixed">
+          <ion-segment-button mode="md" value="FTA" checked>
+            <ion-label>Free to Air</ion-label>
+          </ion-segment-button>
+          <ion-segment-button mode="md" value="PAY">
+            <ion-label>Pay TV</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-row *ngIf="this.segmentBenefit === 'FTA'" style="padding-top: 5px;
+        padding-bottom: 0px;
+        margin: 0px;">
+          <ion-col size="4" *ngFor="let men of FTAmenu; let zx=index">
+      <ion-card button="true" style="padding: 0px;
+      margin: 0px; border-radius: 20px;" (click)="gotobenefit(men.id_benefit)" class="animated flipInX delay-{{ zx + 0.7 }}s">
+          <img src="assets/icon/{{men.img}}"/>
+      </ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="this.segmentBenefit === 'PAY'" style="padding-top: 5px;
+        padding-bottom: 0px;
+        margin: 0px;">
+          <ion-col size="4" *ngFor="let men of PAYmenu; let zx=index">
+      <ion-card button="true" style="padding: 0px;
+      margin: 0px; border-radius: 20px;" (click)="gotobenefit(men.id_benefit)" class="animated flipInX delay-{{ zx + 0.7 }}s">
+          <img src="assets/icon/{{men.img}}"/>
+      </ion-card>
+          </ion-col>
+        </ion-row>
+      </div>
+
+  <ion-infinite-scroll threshold="200px" *ngIf="this.segmentChoose !== 'benefit'" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="circular"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="this.segmentChoose !== 'benefit'">
+        <ion-fab-button (click)="test()">
+          <ion-icon src="assets/icon/filter.svg"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+      <ion-fab *ngIf="viewdownload" vertical="center" horizontal="center" slot="fixed">
+          <!-- <ion-fab-button > -->
+                  <circle-progress style="display: flex; justify-content: center; z-index: 999 !important; align-items: center;"
+                  [percent]="this.progress"
+                  [radius]="30"
+                  [outerStrokeWidth]="2"
+                  [innerStrokeWidth]="8"
+                  [outerStrokeColor]="'#ffffff'"
+                  [innerStrokeColor]="'#ffffff'"
+                  [animation]="true"
+                  [animationDuration]="700"
+                ></circle-progress>
+          <!-- </ion-fab-button> -->
+        </ion-fab>
+        <ion-fab style="left: 45%;" *ngIf="hidebutton && this.segmentChoose !== 'benefit'" vertical="bottom" horizontal="center" slot="fixed">
+                <ion-button shape="round" color="light" (click)="scrollToTop()"><ion-icon name="arrow-up" style=" color: blueviolet;"></ion-icon>&nbsp;<span style="color: blueviolet;">Top</span></ion-button>
+          </ion-fab>
+  </ion-content>
+  

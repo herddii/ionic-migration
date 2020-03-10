@@ -1,0 +1,31 @@
+*, *:before, *:after {
+    box-sizing: inherit;
+    font-family: Poppin
+ }
+
+ .header-md:after {
+    background-position: unset;
+    height: unset;
+}
+div > span{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 160px;
+}
+
+.choose {
+    background-color: rgba(3, 82, 36, 0.726);
+}
+
+.active {
+    padding: 2px;
+    color: seagreen;
+}
+.notactive {
+    padding: 2px;
+    color: darkgray;
+}
+ion-icon{
+    font-size: 1.5rem;
+}

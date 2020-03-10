@@ -1,0 +1,120 @@
+<ion-header *ngIf="!this.loadview">
+  <ion-toolbar *ngIf="!this.loadview">
+      <ion-buttons slot="start">
+          <ion-button (click)="gobacktoawalan()"><ion-icon name="arrow-back" style="padding: 5px;
+            font-size: 1.8em; color: #000;"></ion-icon></ion-button>
+            </ion-buttons>
+    <div style="font-weight: bold;">Reimburse</div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!this.loadview">
+  <div style="height: 80px;">
+  <swiper [config]="config" [(index)]="index" style="padding: 5px">
+    <div class="cardSlide" *ngFor="let u of kerabat" (click)="getDetails(u)">
+      <div style="display: flex;">
+        <img [src]="'http://mncmediakit.com/datafile/user/thumb/'+u.IMAGES"  style="width: 40px; height: 40px; border-radius: 100px;"/>
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <span style="font-size: 12px; font-weight: bold; color: black">{{u.name}}</span>
+        <span style="font-size: 12px; font-weight: bold; color: black">{{getJumlah(u)}}</span>
+      </div>
+      <div>
+        <ion-buttons>
+          <ion-button fill="outline" (click)="getDetails(u)">
+            <span style="font-weight: bold;">Details</span>
+          </ion-button>
+        </ion-buttons>
+      </div>
+    </div>
+  </swiper>
+</div>
+  <div style="display: flex; justify-content: center;">
+    <div style="display: flex; 
+      background-color: whitesmoke;
+      flex-direction: column; 
+      width: 100%;
+      padding: 60px 40px 60px 40px;
+      align-items: center;
+      border-radius: 10px;" *ngFor="let limit of ketut">
+      <div style="font-weight: 600; color: #1fcf48; font-size: 1.2em;">Your Limit</div>
+      <div style="font-family: Barlow Bold;">{{ this.ketut[0]['limit'] | currency:'Rp. '}}</div>
+    </div>
+  </div>
+  
+  <div style="display: flex; flex-direction: row;">
+    <div style="padding: 30px 0px 10px 0px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex: 1">
+      <div>Your Balance</div>
+      <div style="padding: 15px;
+          font-size: 17px;
+          color: #1fcf48;
+          font-family: Barlow Bold;
+          font-weight: 600;" counto [step]="30" [countTo]="this.saldo" [countFrom]="0" [duration]="1"
+        (countoChange)="counto1 = $event">{{counto1 | currency:'Rp. ':'symbol':'1.2-2'}}</div>
+    </div>
+    <div style="padding: 30px 0px 10px 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex: 1">
+      <div>Total Cost</div>
+      <div style="padding: 15px;
+              font-size: 17px;
+              color: #1fcf48;
+              font-family: Barlow Bold;
+              font-weight: 600;" counto [step]="30" [countTo]="this.totalcost" [countFrom]="0" [duration]="1"
+        (countoChange)="counto2 = $event">{{counto2 | currency:'Rp. ':'symbol':'1.2-2'}}</div>
+    </div>
+  </div>
+
+  <ion-list>
+    <div style="font-family: Righteous;
+              font-weight: 400;
+              padding: 15px;
+              font-size: 24px;">
+      History
+    </div>
+  
+    <ion-item *ngFor="let history of reimburse" style='padding: 10px 10px 10px 0px;' lines="none">
+      <img slot="start" src="http://10.22.253.86:8000/image/{{history.nota}}">
+      <div style="margin: 0px; display: flex; flex-direction: column; font-size: 9px; line-height: 1.5;">
+        <span style="font-weight: 600;">{{history.subject}}&nbsp;&nbsp;{{history.description}}</span>
+        <span style="font-weight: 400;">{{history.insert_user}}</span>
+        <span style="font-weight: 200;">{{history.status}}</span>
+        <span style="font-weight: 200; color: gray;">{{history.start_date}}&nbsp;-&nbsp;{{history.end_date}}</span>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <div style="font-family: Righteous;
+              font-weight: 400;
+              padding: 15px 15px 10px 15px;
+              font-size: 24px;">
+      Monthly Report
+    </div>
+    <ion-row *ngFor="let rpt of report" style="padding: 10px; font-weight: 600;">
+      <ion-col>
+        <div>{{rpt.month}}</div>
+      </ion-col>
+      <ion-col>
+        <div style="text-align: right" *ngIf="rpt.total">{{rpt.total.toLocaleString()}}</div>
+        <div style="text-align: right" *ngIf="!rpt.total">-</div>
+      </ion-col>
+      <ion-col>
+        <div style="text-align: right" *ngIf="rpt.percent">{{rpt.percent}}&nbsp;%</div>
+        <div style="text-align: right" *ngIf="!rpt.percent">-</div>
+      </ion-col>
+    </ion-row>
+  
+</ion-content>
+<ion-fab vertical="center" horizontal="center" slot="fixed" *ngIf="this.loadview">
+    <ion-fab-button>
+      <img [src]="'assets/img/loaded.gif'" style="display: flex; justify-content: center; align-items: center;" />
+    </ion-fab-button>
+  </ion-fab>

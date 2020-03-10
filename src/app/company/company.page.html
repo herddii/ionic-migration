@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <div style="display: flex;">
+        <ion-buttons>
+          <ion-button (click)="gobacktoawalan()">
+            <ion-icon name="arrow-back" style="padding: 5px;
+                font-size: 1.8em; color: #000;"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </div>
+      <div style="display: flex; flex: 2">
+        <ion-searchbar placeholder="Search Company" (ionChange)="searchclient($event)"></ion-searchbar>
+      </div>
+      <div style="display: flex; align-items: center;" (click)="presentPopover($event)">
+        <ion-icon name="more" style="padding: 5px;
+        font-size: 1.8em; color: #000;"></ion-icon>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-virtual-scroll [items]="myCompany" approxItemHeight="320px">
+    <div *virtualItem="let item; let itemBounds = bounds;" style="display: flex; flex-direction: row; padding: 10px; margin: 15px;" (click)="gotodetail(item)">
+      <div style="display: flex; margin-right: 10px; align-items: center;">
+      <ion-thumbnail slot="start">
+        <ion-img [src]="setprofile()"></ion-img>
+      </ion-thumbnail>
+    </div>
+      <div style="display: flex; flex: 3; flex-direction: column; justify-content: center;">
+        <span style="font-size: 14px; font-weight: bold;" *ngIf="item.nama_adv">{{ item.nama_adv }}</span>
+        <span style="font-size: 14px; font-weight: bold;" *ngIf="item.nama_agencypintu">{{ item.nama_agencypintu }}</span>
+        <!-- <span style="font-size: 10px; color: darkgray;">{{ this.setposition(item) }}</span> -->
+  </div>
+</div>
+  </ion-virtual-scroll>
+  <!-- <div style="display: flex; justify-content: center; align-items: center;">
+    <span>Client</span>
+  </div> -->
+</ion-content>

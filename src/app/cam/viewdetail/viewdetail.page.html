@@ -1,0 +1,253 @@
+<ion-header *ngIf="!this.loadView">
+  <ion-toolbar shadow="none" class="warna-background-color" *ngIf="!this.loadView">
+    <ion-buttons slot="start" (click)="myBackButton()">
+        <ion-icon name="arrow-back" style="padding: 5px;
+        font-size: 1.8em; color: #fff;"></ion-icon>
+    </ion-buttons>
+    <span style="display: flex;
+    justify-items: center;
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-size: 17px;
+    font-weight: 400;
+    margin-left: 30vw;">Details</span>
+    <ion-buttons slot="end" color="light" style="border-radius: 40px 0px 0px 40px;
+    padding: 15px 0px 15px 0px;
+    margin-right: 0px;
+    background-color: white;">
+    <span style="padding: 5px;
+    color: #331e79; font-size: 10px;" (click)="editCam()" *ngIf="detailtask[0].status === 'PLAN'">Input Report</span>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  <ion-content style="background-color: white;">
+    <div style="padding: 10px; background-color: #485fed;" *ngIf="!this.loadView">
+      <ion-card *ngIf="!this.loadView" style="padding: 10px; background-color: white; border-radius: 11px;">
+            <div style="display: flex; color: #485fed;" *ngFor="let taskinf of detailtask">
+              <div class="meetingwith">
+                <span style="text-transform: capitalize; font-weight: 600;">{{taskinf.subject}}</span>
+                <span style="font-size: 12px;">{{taskinf.tanggal}} / {{taskinf.waktu_start}} - {{taskinf.waktu_end}}</span>
+              </div>
+              <div class="clientandpartner">
+                <div class="datemeeting">
+                  <span style="text-transform: capitalize; font-weight: 600;">Meeting with</span>
+                  <span style="font-size: 12px; text-transform: capitalize;" *ngFor="let clien of client">{{clien.client}}</span>
+                </div>
+                <div class="datemeeting">
+                  <span style="text-transform: capitalize; font-weight: 600;">Your Partner</span>
+                  <span style="font-size: 12px; text-transform: capitalize;" *ngFor="let partn of partner">{{partn.partner}}</span>
+                
+                </div>
+              </div>
+            </div>
+      </ion-card>
+    </div>
+    <ion-fab vertical="center" horizontal="center" slot="fixed" *ngIf="this.loadView">
+      <ion-fab-button>
+        <img [src]="'assets/img/loaded.gif'" style="display: flex; justify-content: center; align-items: center;" />
+      </ion-fab-button>
+    </ion-fab>
+    <ion-row style="background-color: white !important;" *ngIf="!this.loadView">
+      <ion-segment (ionChange)="segmentChanged($event)" mode="md" style="background-color: #fff;">
+  
+        <ion-segment-button mode="md" value="Details" checked>
+          <ion-icon src="assets/icon/list(copy).svg" class="segment-icon" color="tertiary"></ion-icon>
+          <!-- <ion-label style="font-size: 9px; font-weight: 200; text-align: center;" color="light">Task<br>Information</ion-label> -->
+        </ion-segment-button>
+        <ion-segment-button mode="md" value="entertainment">
+          <ion-icon src="assets/icon/receipt.svg" class="segment-icon" color="tertiary"></ion-icon>
+          <!-- <ion-label style="font-size: 9px; font-weight: 200; text-align: center;" color="light">Entertainment</ion-label> -->
+        </ion-segment-button>
+        <ion-segment-button mode="md" value="file">
+          <ion-icon src="assets/icon/folder.svg" class="segment-icon" color="tertiary"></ion-icon>
+          <!-- <ion-label style="font-size: 9px; font-weight: 200; text-align: center;" color="light">File</ion-label> -->
+        </ion-segment-button>
+        <ion-segment-button mode="md" value="comment">
+          <ion-icon src="assets/icon/conversation.svg" class="segment-icon" color="tertiary"></ion-icon>
+          <!-- <ion-label style="font-size: 9px; font-weight: 200; text-align: center;" color="light">Comment</ion-label> -->
+        </ion-segment-button>
+      </ion-segment>
+    </ion-row>
+  
+    <ion-item color="light" text-center *ngIf="!this.loadView">
+      <ion-label color="tertiary" style="font-size: 1.3em;" *ngIf="this.segmentChoose === 'Details'">Task Information
+      </ion-label>
+      <ion-label color="tertiary" style="font-size: 1.3em;" *ngIf="this.segmentChoose === 'entertainment'">Entertainment
+      </ion-label>
+      <ion-label color="tertiary" style="font-size: 1.3em;" *ngIf="this.segmentChoose === 'file'">File</ion-label>
+      <ion-label color="tertiary" style="font-size: 1.3em;" *ngIf="this.segmentChoose === 'comment'">Comment</ion-label>
+    </ion-item>
+    <div *ngIf="!this.loadView">
+      <ion-list *ngFor="let taskinfo of detailtask" style="background-color: white;">
+        <div *ngIf="this.segmentChoose === 'Details'">
+          <ion-item lines="none">
+            <ion-avatar slot="start" class="avatartask">
+              <ion-icon md="md-disc" color="primary"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2 class="judultask">Status</h2>
+              <h5 class="subjudultask">{{taskinfo.status}}</h5>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-avatar slot="start" class="avatartask">
+              <ion-icon md="md-disc" color="secondary"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2 class="judultask">Tasklist from</h2>
+              <h5 class="subjudultask">{{taskinfo.from}}</h5>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-avatar slot="start" class="avatartask">
+              <ion-icon md="md-disc" color="success"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2 class="judultask">Agency</h2>
+              <h5 class="subjudultask">{{taskinfo.agencypintu}}</h5>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-avatar slot="start" class="avatartask">
+              <ion-icon md="md-disc" color="warning"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2 class="judultask">Advertiser</h2>
+              <h5 class="subjudultask">{{taskinfo.advertiser}}</h5>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-avatar slot="start" class="avatartask">
+              <ion-icon md="md-disc" color="tertiary"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2 class="judultask">Location</h2>
+              <h5 class="subjudultask">{{taskinfo.location}}</h5>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-avatar slot="start" class="avatartask">
+              <ion-icon md="md-disc" color="primary"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2 *ngIf="client.length < 2" class="judultask">Client</h2>
+              <h2 *ngIf="client.length > 1" class="judultask">Clients</h2>
+              <h5 class="subjudultask" *ngFor="let clients of client">{{clients.client}}</h5>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-avatar slot="start" class="avatartask">
+              <ion-icon md="md-disc" color="secondary"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2 *ngIf="partner.length < 2" class="judultask">Brand</h2>
+              <h2 *ngIf="partner.length > 1" class="judultask">Brands</h2>
+              <h5 class="subjudultask" *ngFor="let brands of brand">{{brands.brand}}</h5>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-avatar slot="start" class="avatartask">
+              <ion-icon md="md-disc" color="success"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2 class="judultask">Description</h2>
+              <h5 class="subjudultask">{{taskinfo.description}}</h5>
+            </ion-label>
+          </ion-item>
+        </div>
+        <div *ngIf="this.segmentChoose === 'entertainment'">
+          <ion-item lines="none" *ngFor="let ent of entertainment; let i = index">
+              <ion-card (press)="onPress($event,ent,i)" (click)="gotoview(ent,i)" [ngClass]="{'buttonclose': ent.choosen}">
+                  <img [src]="'http://10.22.253.86:8000/image/'+ent.nota" style="height: 40vh;
+                  object-fit: cover !important;
+                      "/>
+                  <ion-card-header>
+                      <ion-card-title>{{ent.title}}</ion-card-title>
+                    <ion-card-subtitle>{{ent.cost.toLocaleString()}}</ion-card-subtitle>
+                  </ion-card-header>
+                  <ion-card-content>
+                      <span>{{ent.cost_by}}</span><br>
+                      <span>{{ent.desc}}</span>
+                  </ion-card-content>
+                </ion-card>
+          </ion-item>
+        </div>
+        <div *ngIf="this.segmentChoose === 'file'"> 
+          <ion-item lines="none" *ngFor="let fil of file; let x = index">
+            <ion-card (press)="onPressFile($event,fil,x)" (click)="gotoviewFile(fil,x)" [ngClass]="{'buttonclose': fil.choosen}">
+              <img
+                *ngIf="fil.nameFile.toLowerCase().lastIndexOf('.jpg') > -1 || fil.nameFile.toLowerCase().lastIndexOf('.jpeg') > -1"
+                [src]="fil.images">
+              <img
+                *ngIf="fil.nameFile.toLowerCase().lastIndexOf('.xls') > -1 || fil.nameFile.toLowerCase().lastIndexOf('.xlsx') > -1"
+                [src]="'assets/img/xls.jpg'" style="height: 40vh;
+                        object-fit: cover !important;">
+              <img *ngIf="fil.nameFile.toLowerCase().lastIndexOf('.pdf') > -1" style="height: 40vh;
+                      object-fit: cover !important;" [src]="'assets/img/pdf.jpg'">
+              <img
+                *ngIf="fil.nameFile.toLowerCase().lastIndexOf('.ppt') > -1 || fil.nameFile.toLowerCase().lastIndexOf('.pptx') > -1"
+                [src]="'assets/img/PPT.jpg'" style="height: 40vh;
+                        object-fit: cover !important;">
+              <ion-card-content>
+                <span>{{fil.nameFile}}</span><br>
+                <span>{{fil.modul}}</span>
+              </ion-card-content>
+            </ion-card>
+          </ion-item>
+        </div>
+        <div *ngIf="this.segmentChoose === 'comment'">
+          <div class="message-wrap">
+            <div *ngFor="let msg of comment" class="message" [class.left]=" msg.userId !== userid"
+              [class.right]=" msg.userId === userid ">
+              <img class="user-img" *ngIf="msg.userId === userid"
+                [src]="'http://sm.mncgroup.com/datafile/public/user/thumb/'+this.images" alt="">
+              <img class="user-img" *ngIf="msg.userId !== userid"
+                [src]="'http://sm.mncgroup.com/datafile/public/user/thumb/'+msg.images" alt="">
+              <!-- <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner> -->
+              <div class="msg-detail">
+                <div class="msg-info">
+    
+                  <p>
+                    {{msg.userId}}&nbsp;&nbsp;&nbsp;{{msg.time}}</p>
+                </div>
+                <div class="msg-content">
+                  <span class="triangle"></span>
+                  <p class="line-breaker ">{{msg.chat}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-list>
+    </div>
+  </ion-content>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="this.segmentChoose === 'entertainment' && !this.buttonclose">
+    <ion-fab-button>
+      <ion-icon name="add" (click)="addRowEntertainment()"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="this.segmentChoose === 'file' && !this.buttonclose">
+    <ion-fab-button>
+      <ion-icon name="add" (click)="addRowFile()"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <div slot="fixed" style="box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+            display: flex;
+            justify-content: center;" *ngIf="this.segmentChoose === 'entertainment' && this.buttonclose">
+    <ion-button color="light" style="flex: 1; border: 1px solid red; border-radius: 5px;" (click)="deleteCost()"><span style="color: red">Delete</span></ion-button>
+    <ion-button color="light" style="flex: 1; border: 1px solid green; border-radius: 5px;" (click)="editCost()"><span style="color: green;">Edit</span></ion-button>
+</div>
+<div slot="fixed" style="box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+display: flex;
+justify-content: center;" *ngIf="this.segmentChoose === 'file' && this.buttonclose">
+<ion-button color="light" expand="block" (click)="deleteFile()"><span style="color: red">Delete</span></ion-button>
+</div>
+<div class="input-wrap" slot="fixed" *ngIf="this.segmentChoose === 'comment'">
+    <textarea #chat_input placeholder="Text Input" [(ngModel)]="editorMsg" (keyup.enter)="sendMsg()"
+      (focusin)="onFocus()">
+          </textarea>
+          <ion-button color="primary" expand="block" (click)="sendMsg()">
+            <span style="color: white;">Send</span>
+          </ion-button>
+  </div>

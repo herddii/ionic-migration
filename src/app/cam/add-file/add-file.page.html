@@ -1,0 +1,77 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start" (click)="myBackButton()">
+            <ion-icon name="arrow-back" style="padding: 5px;
+            font-weight: 800; font-size: 24px; color: #000;"></ion-icon>
+        </ion-buttons>
+      <span style="display: flex;
+      justify-content: center;">Add File</span>
+      <ion-buttons slot="end" (click)="addEvent()">
+        <ion-icon name="checkmark" style="font-size: 24px;
+      padding: 5px;
+      font-weight: 800;"></ion-icon>
+      </ion-buttons>
+    </ion-toolbar>
+    </ion-header>
+
+<ion-content>
+    <ion-item>
+        <ion-label slot="start" style="font-size: 12px;">Module</ion-label>
+        <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+        [(ngModel)]="modultype"
+        [items]="modultypes"
+        placeholder="Tap Me !"
+        itemValueField="id"
+        itemTextField="text"
+        [canSearch]="true"
+        [hasVirtualScroll]="true"
+        (onChange)="modulChange($event)">
+      </ionic-selectable>
+        <!-- <ion-select style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end" (ionChange)="getmodule($event)" [(ngModel)]="modultype">
+          <ion-select-option value="slskt_prog">Saleskit Program</ion-select-option>
+          <ion-select-option value="slskt_rate">Saleskit Ratecard</ion-select-option>
+          <ion-select-option value="slskt_spc">Saleskit Special Offer</ion-select-option>
+          <ion-select-option value="sam_concept">SAM Concept</ion-select-option>
+          <ion-select-option value="sam_packet">SAM Paket</ion-select-option>
+        </ion-select> -->
+      </ion-item>
+      <ion-item>
+        <ion-label slot="start" style="font-size: 12px;">Program Name</ion-label>
+        <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+        [(ngModel)]="programName"
+        [items]="progName"
+        [disabled]="programSelect"
+        placeholder="Tap Me !"
+        itemValueField="id_program_periode"
+        itemTextField="program_name"
+        [canSearch]="true"
+        [hasVirtualScroll]="true"
+        (onChange)="progNameChange($event)">
+      </ionic-selectable>
+      </ion-item>
+      <ion-item (click)="selectFile()" [disabled]="selectfile">
+          <ion-label slot="start" style="font-size: 12px;">Select File</ion-label>
+          <ion-icon slot="end" name="ios-arrow-forward"></ion-icon>
+        </ion-item>
+        <span class="choose_file" *ngIf="this.selectedfile.length > 1">You Choose {{this.selectedfile.length}} Files</span>
+  <span class="choose_file" *ngIf="this.selectedfile.length < 1">No File Chosen</span>
+  <ion-row>
+    <ion-col size="6" *ngFor="let file of selectedfile">
+      <ion-card (click)="goTo(file)">
+          <img *ngIf="file.content_file_download.toLowerCase().lastIndexOf('.jpg') > -1 || file.content_file_download.toLowerCase().lastIndexOf('.jpeg') > -1" [src]="'http://mncmediakit.com/datafile/thumbnail/'+file.id_filetype+'/'+file.content_file_download">
+          <img *ngIf="file.content_file_download.toLowerCase().lastIndexOf('.xls') > -1 || file.content_file_download.toLowerCase().lastIndexOf('.xlsx') > -1" [src]="'assets/img/xls.jpg'">
+          <img *ngIf="file.content_file_download.toLowerCase().lastIndexOf('.pdf') > -1" [src]="'assets/img/pdf.jpg'">
+          <img *ngIf="file.content_file_download.toLowerCase().lastIndexOf('.ppt') > -1 || file.content_file_download.toLowerCase().lastIndexOf('.pptx') > -1" [src]="'assets/img/PPT.jpg'">
+          <!-- <ion-button fill="outline" slot="end">{}</ion-button> -->
+          <ion-card-content style="text-align: left;">
+            <h2 style="
+            font-size: 11px;
+            font-weight: 600;">{{file.content_title}}</h2>
+            <h3 style="
+            font-size: 9px;
+            font-weight: 400;">{{file.updated_at}}</h3>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+  </ion-row>
+</ion-content>

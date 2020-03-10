@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <div style="display: flex;">
+        <ion-buttons>
+          <ion-button (click)="gobacktoawalan()">
+            <ion-icon name="arrow-back" style="padding: 5px;
+                font-size: 1.8em; color: #000;"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </div>
+      <div style="display: flex; flex: 2">
+        <ion-searchbar placeholder="Search Client Handling" (ionChange)="searchclient($event)"></ion-searchbar>
+      </div>
+      <div style="display: flex; align-items: center;" (click)="presentPopover($event)">
+        <ion-icon name="more" style="padding: 5px;
+        font-size: 1.8em; color: #000;"></ion-icon>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #fullscreen>
+    <div *ngFor="let item of myclient"
+      style="display: flex; flex-direction: row; padding: 10px; margin: 15px;" (click)="seeprofile(item)" >
+      <div style="display: flex; margin-right: 10px; align-items: center;" class="ion-activatable" >
+        <ion-thumbnail slot="start">
+          <ion-img [src]="'assets/icon/'+item.photo"></ion-img>
+        </ion-thumbnail>
+      </div>
+      <div style="display: flex; flex: 3; flex-wrap: nowrap; flex-direction: column; justify-content: center;">
+        <span style="font-size: 14px; font-weight: bold;">{{ this.mergename(item) }}</span>
+        <span style="font-size: 10px; color: darkgray;">{{ item.company }}</span>
+        <span style="font-size: 10px; color: darkgray;">{{ this.setposition(item) }}</span>
+      </div>
+      <div style="white-space: nowrap; display: flex; align-items: center;">
+        <ion-buttons>
+          <ion-button (click)="calling(item)">
+              <ion-icon src="assets/icon/call.svg" [ngClass]="{'active' : item.phone_number, 'notactive' : !item.phone_number }">
+              </ion-icon>
+            </ion-button>
+          <ion-button (click)="email(item)">
+            <ion-icon src="assets/icon/gmail.svg"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <!-- <span>{{this.setphone(item.phone_number)}}</span> -->
+      <ion-ripple-effect></ion-ripple-effect>
+    </div>
+    </div>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  <!-- <div style="display: flex; justify-content: center; align-items: center;">
+    <span>Client</span>
+  </div> -->
+</ion-content>

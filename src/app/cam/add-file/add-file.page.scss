@@ -1,0 +1,14 @@
+img {
+    height: 20vh;
+    object-fit: cover;
+}
+
+.choose_file{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    font-style: italic;
+    padding: 5px;
+    font-size: 9px;
+    color: red;
+  }

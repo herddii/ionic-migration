@@ -1,0 +1,19 @@
+*, *::before, *::after {
+    font-family: Poppin;
+} 
+
+.before-select{
+    margin: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+    color: gray;
+}
+.after-select{
+    margin: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+}

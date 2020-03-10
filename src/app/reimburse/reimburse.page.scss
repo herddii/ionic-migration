@@ -1,0 +1,66 @@
+*, *:before, *:after {
+    font-family: Poppin
+  }
+
+.actbutton{
+    background-color:#f7f7f7;
+    color: #1fcf48;
+    border-radius: 20px;
+    padding: 5px 20px 5px 20px;
+    border: 1px solid #dadada;
+    box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.4);
+    font-family: Barlow Bold;
+}
+
+.cardSlide {
+    height: 50px !important;
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 5px;
+    align-items: center;
+    box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.9);
+    border-radius: 4px;
+    flex-direction: row;
+  }
+
+.ijo{
+    color: #1fcf48;
+}
+
+.kuning {
+    color: yellow;
+}
+
+.red {
+    color: red;
+}
+
+.scrolling-wrapper {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+ion-list {
+    img {
+    display: block;
+    height: 60px;
+    width: 20%;
+    object-fit: cover !important;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    }
+}
+ion-card{
+    width: 100%;
+    img {
+        display: block;
+        height: 120px;
+        width: 100%;
+        object-fit: cover !important;
+        border-radius: 10px;
+        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+      } 
+}

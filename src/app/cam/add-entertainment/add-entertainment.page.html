@@ -1,0 +1,74 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start" (click)="myBackButton()">
+            <ion-icon name="arrow-back" style="padding: 5px;
+            font-weight: 800; font-size: 24px; color: #000;"></ion-icon>
+        </ion-buttons>
+      <span style="display: flex;
+      justify-content: center;">Add Entertainment</span>
+      <ion-buttons slot="end" (click)="addEvent()">
+        <ion-icon name="checkmark" style="font-size: 24px;
+      padding: 5px;
+      font-weight: 800;"></ion-icon>
+      </ion-buttons>
+    </ion-toolbar>
+    </ion-header>
+
+<ion-content>
+    <div *ngFor="let in of [].constructor(counting); let i = index" style="padding: 5px;">
+        <span *ngIf="counting == 1" style="display: flex; justify-content: center; align-items: center; color: #787d7d; padding: 5px;">There is no entertainment added !</span>
+          <ion-item-sliding *ngIf="i > 0" style="box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+              border-radius: 20px;">
+            <ion-item style="padding: 0px; margin: 0px;" lines="none">
+              <ion-card style="margin: 0px; padding: 0px; width: 100%;">
+                <ion-item lines="none">
+                  <ion-input placeholder="Title" [(ngModel)]="titleEntertainment[i-1]"></ion-input>
+                </ion-item>
+                <ion-item lines="none">
+                  <ion-label slot="start" style="font-size: 12px;">Cost By</ion-label>
+                  <ionic-selectable style="font-size: 12px !important; max-width: 100%; color: #787d7d;" slot="end"
+                  [(ngModel)]="partnerEntertainment[i-1]"
+                  [items]="partners"
+                  placeholder="Tap Me !"
+                  itemValueField="id"
+                  itemTextField="text"
+                  [canSearch]="true"
+                  [hasVirtualScroll]="true"
+                  (onChange)="portChange($event)">
+                </ionic-selectable>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-input placeholder="Entertainment" [(ngModel)]="hargaEntertainment[i-1]"></ion-input>
+              </ion-item>
+              <ion-item lines="none">
+                <div class="file-upload">
+                  <img *ngIf="images[i-1]" src="{{images[i-1].path}}" />
+                  <img *ngIf="this.nota && !images[i-1]" [src]="'http://10.22.253.97:9191/image/'+this.nota" />
+                  <ion-button *ngIf="!images[i-1] && !this.nota" fill="clear" expand="full" (click)="readImage()">
+                    <ion-icon slot="start" name="camera"></ion-icon>
+                    Select Image
+                  </ion-button>
+                  <ion-button *ngIf="!images[i-1] && this.nota" fill="clear" expand="full" (click)="readImage()">
+                    <ion-icon slot="start" name="camera"></ion-icon>
+                    Change Image
+                  </ion-button>
+                </div>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-input placeholder="Description" [(ngModel)]="descEntertainment[i-1]"></ion-input>
+              </ion-item>
+            </ion-card>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option (click)="deleteRow()" color="danger">
+              <ion-icon name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+    </div>
+</ion-content>
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="!this.id_cam_cost">
+    <ion-fab-button>
+    <ion-icon name="add" (click)="addRow()"></ion-icon>
+    </ion-fab-button>
+    </ion-fab>

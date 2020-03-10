@@ -1,0 +1,116 @@
+<ion-content>
+<div class="column">
+  <div style=" 
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding: 10px">
+      <img *ngIf="images[0]" src="{{images[0].path}}" style="width: 200px; height: 200px; border-radius: 400px; object-fit: cover;"/>
+      <img *ngIf="!images[0]" [src]="setimage(this.photo)" style="width: 200px; height: 200px;">
+      <div class="nambah_pict" (click)="readImage()" *ngIf="this.images.length < 1">
+        <ion-icon name="add" style="padding: 5px;
+        font-size: 1.8em; color: green;"></ion-icon>
+      </div>
+      
+    </div>
+  <div style="margin-left: 5px; display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+    <span style="font-size: 16px; font-weight: bold;">Profile Advance</span>
+    <div style="width: 200px; background-color: rgb(158, 211, 13); height: 2px;"></div>
+  </div>
+  <div style="padding: 10px;">
+    <ion-item>
+      <ion-input style="margin: 0px; padding: 0px" type="text" placeholder="Email" [(ngModel)]="email" margin>
+      </ion-input>
+      <ion-icon src="assets/icon/gmail.svg"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-input style="margin: 0px; padding: 0px" type="text" placeholder="Phone" [(ngModel)]="phone" margin>
+      </ion-input>
+      <ion-icon src="assets/icon/call.svg" style="color:green"></ion-icon>
+    </ion-item>
+    <ion-item (click)="actionStatus()">
+      <div style="display: flex; justify-content: flex-start; flex: 2; align-items: center;">
+        <span>Status</span>
+      </div>
+      <div style="display: flex; justify-content: flex-end; flex: 1; align-items: center;">
+        <span *ngIf="this.status" class="after-select">{{this.status}}</span>
+        <span *ngIf="!this.status" class="before-select">Select one</span>
+        <ion-icon src="assets/icon/arrow.svg"></ion-icon>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-input style="margin: 0px; padding: 0px" type="number" placeholder="Child" [(ngModel)]="child" margin>
+      </ion-input>
+    </ion-item>
+    <ion-item (click)="presentAlertCheckbox()">
+      <div style="display: flex; justify-content: flex-start; flex: 2; align-items: center;">
+        <span>Hobby</span>
+      </div>
+      <div style="display: flex; justify-content: flex-end; flex: 1; align-items: center;">
+        <span *ngIf="this.hobby_select" class="after-select">{{this.hobby_select}}</span>
+        <span *ngIf="!this.hobby_select" class="before-select">Select one</span>
+        <ion-icon src="assets/icon/arrow.svg"></ion-icon>
+      </div>
+    </ion-item>
+    <ion-item (click)="actionEducation()">
+      <div style="display: flex; justify-content: flex-start; flex: 2; align-items: center;">
+        <span>Education</span>
+      </div>
+      <div style="display: flex; justify-content: flex-end; flex: 1; align-items: center;">
+        <span *ngIf="this.education" class="after-select">{{this.education}}</span>
+        <span *ngIf="!this.education" class="before-select">Select one</span>
+        <ion-icon src="assets/icon/arrow.svg"></ion-icon>
+      </div>
+    </ion-item>
+  </div>
+</div>
+<div class="column">
+  <div style="margin-left: 5px; display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+    <span style="font-size: 16px; font-weight: bold;">Social Media</span>
+    <div style="width: 200px; background-color: blueviolet; height: 2px;"></div>
+  </div>
+  <div style="padding: 10px;">
+    <ion-item>
+      <ion-input style="margin: 0px; padding: 0px" type="text" placeholder="Facebook" [(ngModel)]="sosmed.facebook" margin>
+      </ion-input>
+      <ion-icon name="logo-facebook" style="color: rgb(5, 5, 179)"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-input style="margin: 0px; padding: 0px" type="text" placeholder="Twitter" [(ngModel)]="sosmed.twitter" margin>
+      </ion-input>
+      <ion-icon name="logo-twitter" style="color: rgb(18, 98, 129)"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-input style="margin: 0px; padding: 0px" type="text" placeholder="Instagram" [(ngModel)]="sosmed.instagram" margin>
+      </ion-input>
+      <ion-icon src="assets/icon/instagram.svg"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-input style="margin: 0px; padding: 0px" type="text" placeholder="LinkedIn" [(ngModel)]="sosmed.linkedin" margin>
+      </ion-input>
+      <ion-icon name="logo-linkedin" style="color: rgb(3, 3, 48)"></ion-icon>
+    </ion-item>
+  </div>
+</div>
+<div class="column">
+  <div style="margin-left: 5px; display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+    <span style="font-size: 16px; font-weight: bold;">Client Description</span>
+    <div style="width: 200px; background-color: rgb(138, 9, 26); height: 2px;"></div>
+  </div>
+  <div style="padding: 10px;">
+    <ion-item>
+      <ion-textarea placeholder="Description" [(ngModel)]="desc"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-textarea placeholder="Like" [(ngModel)]="like"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-textarea placeholder="Dislike" [(ngModel)]="dislike"></ion-textarea>
+    </ion-item>
+  </div>
+  <div style="display: flex; align-items: center; flex-direction: column;">
+    <ion-button (click)="saving()"style="width: 200px;" shape="round" size="default" color="tertiary"><span style="font-weight: bold;">Save</span></ion-button>
+    <ion-button (click)="goback()" style="width: 200px;" shape="round" size="default" color="danger"><span style="font-weight: bold;">Cancel</span></ion-button>
+  </div>
+</div>
+</ion-content>

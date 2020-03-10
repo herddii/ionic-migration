@@ -1,0 +1,118 @@
+.fotogede {
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
+    margin: 10px;
+    padding: 10px;
+}
+.nama {
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
+    margin: 5px;
+    flex-direction: column;
+    span {
+        font-size: 14;
+        font-weight: bold;
+        text-transform: uppercase;    
+    }
+}
+.active {
+    color: seagreen;
+}
+.notactive {
+    color: darkgray;
+}
+div > ion-icon {
+    font-size: 2rem;
+    padding: 10px;
+}
+
+.card {
+    display: flex; 
+    flex-direction: column; 
+    border-radius: 5px;    
+    margin: 2px;
+    background-color: rgb(194, 194, 194);
+    padding: 10px; 
+}
+
+.body-card {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 30vh;
+}
+.card-bottom  {
+    display: flex; 
+    flex-direction: column;     
+    margin: 2px;
+    padding: 10px; 
+}
+
+ion-icon {
+    font-size: 12px;
+}
+
+.active-fb {
+    color: rgb(5, 5, 179)
+}
+
+.notactive {
+    color: gray
+}
+
+.active-twitter {
+    color: rgb(18, 98, 129)
+}
+
+.active-ig {
+    color: rgb(238, 159, 13)
+}
+
+.active-linkedin {
+    color: rgb(3, 3, 48)
+}
+
+.body-card {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 30vh;
+}
+
+*, *:before, *:after {
+    font-family: Poppin;
+    scroll-behavior: smooth;
+ }
+ ion-card {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+ }
+
+ .menu-isi{
+    display: flex;
+    justify-content: flex-start; 
+    flex: 1;
+    span {
+        font-size: 12;
+        font-weight: 400;
+        text-transform: lowercase;    
+    }
+ }
+ .menu-judul{
+    display: flex; 
+    justify-content: center; 
+    flex: 1;
+    span {
+        font-size: 14;
+        font-weight: bold;
+        text-transform: uppercase;    
+    }
+ }
+ .pemisah-list{
+    display: flex; 
+    flex-direction: row; 
+    justify-content: center;
+ }

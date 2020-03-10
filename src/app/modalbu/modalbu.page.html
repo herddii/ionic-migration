@@ -1,0 +1,21 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="closeModal()"><ion-icon name="ios-arrow-back" style="font-size: 12px;"></ion-icon>&nbsp;&nbsp;Back</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+    </ion-header>
+  
+  <ion-content>
+    <ion-list>
+          <ion-item *ngFor="let t of bucustom; let i = index" (click)="getVal(t)">
+            <ion-label>
+              <h2>{{t.NAMA_BU}}</h2>
+              <!-- <h3>{{t.updated_at}}</h3> -->
+            </ion-label>
+            <!-- <ion-checkbox slot="end" (ionChange)="getVal(t,$event)" [(ngModel)]="t.isChecked"></ion-checkbox> -->
+          </ion-item>
+    </ion-list>
+  
+  </ion-content>
+  

@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-button (click)="gobacktoawalan()"><ion-icon name="arrow-back" style="padding: 5px;
+            font-size: 1.8em; color: #000;"></ion-icon></ion-button>
+            </ion-buttons>
+    <div style="font-family: Righteous;" slot="start">Report</div>
+  </ion-toolbar>
+  <ion-segment mode="md" scrollable (ionChange)="segmentChanged($event)" style="background-color: #fff; z-index: 999;"
+    slot="fixed">
+    <ion-segment-button mode="md" value="hari" checked>
+      <ion-label>Daily</ion-label>
+    </ion-segment-button>
+    <ion-segment-button mode="md" value="bulan">
+      <ion-label>Monthly</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+
+<ion-content *ngIf="segmentChoose === 'hari'">
+  <div  style="display: flex; flex-direction: row; justify-content: center; padding: 10px;">
+  <ion-input placeholder="Click me to select date" [(ngModel)]="selectedDate" (click)="openDatePicker()" style="border: 1px solid gray;
+  border-radius: 10px;
+  padding: 5px;
+  text-align: center; flex:auto; justify-content: center; width: 50%;"></ion-input>
+  <ion-button style="flex: 1; padding-left: 5px;" (click)="openDatePicker()">Date</ion-button>
+</div>
+<ion-list style="padding: 0px;" *ngIf="this.datadaily.length > 0">
+    <div style="font-family: Righteous;
+              font-weight: 400;
+              padding: 15px;">
+      List
+    </div>
+  
+    <div *ngFor="let history of datadaily" style='padding: 10px; display: flex; flex-direction: row;'>
+      <img style="display: flex; flex:1;" src="http://10.22.253.86:8000/image/{{history.nota}}">
+      <div slot="end" style="padding: 10px; margin: 0px; display: flex; flex: 3; flex-direction: column; font-size: 9px; line-height: 1.5;">
+        <span style="font-weight: 600;">{{history.subject}}&nbsp;|&nbsp;{{history.status}}</span>
+        <span style="font-weight: 400;">{{history.insert_user}}</span>
+        <span style="font-weight: 200;">{{history.firstname}}&nbsp;{{history.lastname}}</span>
+        <span style="text-align: right; font-weight: 200; color: gray;">Total Cost&nbsp;&nbsp;{{history.cost.toLocaleString("ID")}}</span>
+      </div>
+    </div>
+  </ion-list>
+</ion-content>
+<ion-content *ngIf="segmentChoose === 'bulan'">
+    <div  style="display: flex; flex-direction: row; justify-content: center; padding: 10px;">
+    <ion-input placeholder="Click me to select month" [(ngModel)]="selectedMonth" (click)="openDatePicker2()" style="border: 1px solid gray;
+    border-radius: 10px;
+    padding: 5px;
+    text-align: center; flex:auto; justify-content: center; width: 50%;"></ion-input>
+    <ion-button style="flex: 1; padding-left: 5px;" (click)="openDatePicker2()">Date</ion-button>
+  </div>
+  <ion-list style="padding: 0px;" *ngFor="let task of dataMonth | groupBy:'week' | pairs">
+      <div style="font-family: Righteous;
+                font-weight: 400;
+                padding: 15px;">
+        Week {{task[0]}}
+      </div>
+    
+      <div *ngFor="let history of task[1]" style='padding: 10px; display: flex; flex-direction: row;'>
+        <img style="display: flex; flex:1;" src="http://10.22.253.86:8000/image/{{history.nota}}">
+        <div slot="end" style="padding: 10px; margin: 0px; display: flex; flex: 3; flex-direction: column; font-size: 9px; line-height: 1.5;">
+          <span style="font-weight: 600;">{{history.subject}}</span>
+          <span style="font-weight: 400;">{{history.start_date}}</span>
+          <span style="font-weight: 200;">{{history.status}}</span>
+          <span style="font-weight: 200;">{{history.firstname}}&nbsp;{{history.lastname}}</span>
+          <span style="text-align: right; font-weight: 200; color: gray;">Total Cost&nbsp;&nbsp;{{history.cost.toLocaleString("ID")}}</span>
+        </div>
+      </div>
+    </ion-list>
+  </ion-content>

@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <div style="display: flex; flex:1">
+        <ion-buttons>
+          <ion-button (click)="gobacktoawalan()">
+            <ion-icon name="arrow-back" style="padding: 5px;
+                font-size: 1.8em; color: #000;"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </div>
+      <div style="display: flex; flex: 4">
+        <div style="display: flex; flex-direction: column;">
+          <span style="font-size: 14px; font-weight: bold;">Report Activity</span>
+          <span style="font-size: 12px; font-weight: 400; color: gray;">Adelia Fortiena</span>
+        </div>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar placeholder="Search Client Handling" (ionChange)="searchclient($event)"></ion-searchbar>
+  <div style="display: flex; padding: 10px; flex-direction: column;">
+    <div style="height: 100px;">
+      <swiper [config]="config" [(index)]="index">
+        <div class="cardSlide" *ngFor="let u of infouser" (click)="getDetails(u)">
+          <div style="display: flex;">
+            <img [src]="'http://mncmediakit.com/datafile/user/thumb/'+u.IMAGES"
+              style="width: 40px; height: 40px; border-radius: 100px;" />
+          </div>
+          <div style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; font-weight: bold; color: black">{{u.USER_NAME}}</span>
+            <span style="font-size: 12px; font-weight: 400; color: gray">{{u.POSITION}}</span>
+            <span style="font-size: 12px; font-weight: 400; color: black">{{u.plan}}&nbsp;/&nbsp;{{u.report}}</span>
+          </div>
+          <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <ion-icon src="assets/icon/complete.svg" style="font-size: 25px;">
+              </ion-icon>
+              <!-- <span style="font-size: 12px; font-weight: 400; color: gray">{{u.plan}}/{{u.report}}</span> -->
+          </div>
+        </div>
+      </swiper>
+    </div>
+    <section class="upcoming-events" style="padding: 10px;">
+      <div class="container" *ngFor="let task of mycustomarray | groupBy:'id_am' | pairs">
+        <h3 class="animated flipInX delay-{{ 1 + 0.5 }}s">
+          {{task[0]}}
+        </h3>
+        <div class="events-wrapper" *ngFor="let tasklist of task[1]; let i = index">
+          <ion-item-sliding class="animated flipInX delay-{{ i + 0.5 }}s">
+            <ion-item>
+              <div class="event" style="width: 100%;"
+                (click)="ActiveClick(tasklist.id_activity, tasklist.id_cam)">
+                <h6 class="event__point">{{tasklist.description}}</h6>
+                <div class="event__duration">
+                  <span style="background-color:  #485fed;; 
+                            color: #fff; 
+                            width: inherit;
+                            display: flex;
+                            justify-content: center;
+                            padding-bottom: 4px;
+                            border-radius: 2px 2px 0px 0px;">{{tasklist.DayD}}</span>
+                  <span style="font-size: large; color:  #485fed;">{{tasklist.DateD}}</span>
+                  <span style="color:  #485fed;">{{tasklist.MonthD}}</span>
+                  <!-- <span>{{tasklist.HoursD}}</span>
+                            <span>{{tasklist.MinutesD}}</span> -->
+                </div>
+                <p class="event__description">
+                  {{tasklist.nama_agency}}<br />
+                  {{tasklist.nama_brand}}
+                </p>
+                <div class="event__description">
+                  <span class="flag-report" *ngIf="tasklist.status === 'ACTUAL'">
+                    Report
+                  </span>
+                  <span class="flag-plan" *ngIf="tasklist.status === 'PLAN'">
+                    Plan
+                  </span>
+                  <span style="float: right;">
+                    {{tasklist.client}}
+                  </span>
+                </div>
+              </div>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option color="danger" (click)="deleteCam(tasklist.id_cam,0)">Delete</ion-item-option>
+            </ion-item-options>
+            <ion-item-options *ngIf="tasklist.status === 'PLAN'" side="start">
+              <ion-item-option color="primary" (click)="editCam(tasklist)">Report</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </div>
+      </div>
+    </section>
+  </div>
+</ion-content>

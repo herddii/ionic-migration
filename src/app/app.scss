@@ -1,0 +1,97 @@
+// App Styles
+// ----------------------------------------------------------------------------
+// Put style rules here that you want to apply to the entire application. These 
+// styles are for the entire app and not just one component. Additionally, this 
+// file can hold Sass mixins, functions, and placeholder classes to be imported 
+// and used throughout the application.
+@import '../theme/fonts';
+
+.new-background-color{
+  --background: linear-gradient(to left, #485fed, rgba(255, 44, 118, 0.25)), #485fed !important;
+  transition: var(--background) 5s ease-in;
+}
+
+// *, *:before, *:after {
+//   box-sizing: inherit;
+//   font-family: Poppin
+// }
+
+.header-md:after {
+  background-position: unset;
+  height: unset;
+}
+
+ion-refresher {
+  z-index: 999 !important;
+}
+.warna-background-color{
+  --background: #334fff !important;
+}
+
+.saleskit-background-color{
+  --background: #ee3158 !important;
+}
+
+.background_abu {
+  --background: #f7f7f7 !important;
+}
+
+.white-background {
+  --background: white;
+  transition: var(--background) 5s ease-in;
+} 
+
+.black-background {
+  --background: #000;
+}
+
+.test-background {
+  --background-color: #00a193 !important;
+}
+
+ionic-selectable-page{
+  .content{
+  .scroll-content{
+  .list{
+  .ionic-selectable-group{
+  .ionic-selectable-item{
+  > .icon{
+  display: none !important;
+  }
+  }
+  }
+  }
+  }
+  }
+  }
+
+
+  // swiper > .swiper.s-wrapper {
+  //   height: fit-content !important;
+  //   background-color: white;
+  // }
+  .monthview-primary-with-event{
+    background-color: blueviolet !important;
+    border-radius: 100px;
+ }
+
+ .monthview-current{
+  background-color: #3880ff !important;
+  width: 10px;
+  color: white;
+  border-radius: 100px;
+ }
+
+ .monthview-selected{
+  background-color: #585858 !important;
+  border-radius: 100px;
+ }
+
+ .table > tbody > tr > td{
+   padding: 8px !important;
+   line-height: normal !important;
+   border: none !important;
+ }
+ .searchbar-input {
+   font-size: 0.7rem !important;
+ }

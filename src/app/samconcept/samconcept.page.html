@@ -1,0 +1,75 @@
+<ion-content>
+<div style="display: flex; flex-direction: row; height: 60px;
+  background-color: #485fed;">
+    <div style="display: flex; flex: 3; align-items: center; justify-content: flex-start;">
+    <ion-buttons>
+      <ion-button (click)="gobacktoawalan()">
+        <ion-icon name="arrow-back" style="padding: 5px;
+        font-size: 1.8em; color: #fff;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- <ion-title color="light" slot="start">CAM ACTIVITY</ion-title> -->
+    <span style="color: white; font-family: Poppin; font-weight: bold;
+    font-size: 1.3rem;">SAM Concept</span>
+  </div>
+  <div style="display: flex; align-items: center; flex: 1; justify-content: flex-end;">
+    <ion-buttons>
+      <ion-button (click)="bukamenu()">
+        <ion-icon name="notifications" color="light" style="font-size: 20px;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    </div>
+  </div>
+  <div style="padding: 10px; margin-left: 5px; display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+    <span style="font-size: 16px; font-weight: bold;">Basics</span>
+    <div style="width: 200px; background-color: rgb(158, 211, 13); height: 2px;"></div>
+  </div>
+  <div style="background-color: #eee;">
+    <ion-item (click)="actionRequestype()">
+      <div style="display: flex; justify-content: flex-start; flex: 2; align-items: center;">
+        <span>Requested By</span>
+      </div>
+      <div style="display: flex; justify-content: flex-end; flex: 1; align-items: center;">
+        <span *ngIf="this.request" class="after-select">{{this.request}}</span>
+        <span *ngIf="!this.request" class="before-select">Select one</span>
+        <ion-icon src="assets/icon/arrow.svg"></ion-icon>
+      </div>
+    </ion-item>
+    <ion-item (click)="actionCreativeBrief()">
+      <div style="display: flex; justify-content: flex-start; flex: 2; align-items: center;">
+        <span>Creative Brief</span>
+      </div>
+      <div style="display: flex; justify-content: flex-end; flex: 1; align-items: center;">
+        <span *ngIf="this.requestype" class="after-select">{{this.requestype}}</span>
+        <span *ngIf="!this.requestype" class="before-select">Select one</span>
+        <ion-icon src="assets/icon/arrow.svg"></ion-icon>
+      </div>
+    </ion-item>
+    <ion-item (click)="presentModal('program')">
+      <div style="display: flex; justify-content: flex-start; flex: 2; align-items: center;">
+        <span>Program</span>
+      </div>
+      <div style="display: flex; justify-content: flex-end; flex: 1; align-items: center;">
+        <span *ngIf="this.selected.length > 0" class="after-select">{{this.selected.length}} Added</span>
+        <span *ngIf="this.selected.length < 1" class="before-select">Select one</span>
+        <ion-icon src="assets/icon/arrow.svg"></ion-icon>
+      </div>
+    </ion-item>
+  </div>
+  <div style="padding: 10px; margin-left: 5px; display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+    <span style="font-size: 16px; font-weight: bold;">Information</span>
+    <div style="width: 200px; background-color: rgb(3, 53, 145); height: 2px;"></div>
+  </div>
+  <div style="background-color: #eee;">
+    <ion-item (click)="presentModal('am')">
+      <div style="display: flex; justify-content: flex-start; flex: 2; align-items: center;">
+        <span>AM</span>
+      </div>
+      <div style="display: flex; justify-content: flex-end; flex: 1; align-items: center;">
+        <span *ngIf="this.am" class="after-select">{{this.am}}</span>
+        <span *ngIf="!this.am" class="before-select">Select one</span>
+        <ion-icon src="assets/icon/arrow.svg"></ion-icon>
+      </div>
+    </ion-item>
+  </div>
+</ion-content>

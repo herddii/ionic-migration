@@ -1,0 +1,23 @@
+<ion-content class="background">
+  <form class="list-form" #loginForm="ngForm">
+    <ion-card style="padding: 20px; border-radius: 10px; margin-top: 15%; background-color: white;">
+      <ion-card-header style="display: flex !important;">
+        <div class="putchild">
+        <img class="logo" src="assets/imgs/logo_mnc.png" />
+        </div>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-item>
+          <ion-input placeholder="email" name="email" [(ngModel)]="emailForm" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input placeholder="password" name="password" [(ngModel)]="passwordForm" type="password"></ion-input>
+        </ion-item>
+        <ion-button expand="block" shape="round" (click)="onLogin(loginForm)">LOGIN</ion-button>
+        <!-- <button ion-button block round no-margin color="primary" (click)="onLogin(loginForm)">LOGIN</button> -->
+        <br> 
+      </ion-card-content>
+    </ion-card>
+</form>
+</ion-content>

@@ -1,0 +1,26 @@
+<ion-header class="black-background">
+    <ion-toolbar class="black-background">
+      <span slot="start" style="color: white; padding-left: 15px; font-weight: 600; font-size: 1.1rem;">
+        {{this.result.content_title}}
+      </span>
+      <ion-buttons slot="end">
+          <ion-button (click)="share(this.result)"><ion-icon src="assets/icon/share.svg" style=" color: white;"></ion-icon></ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+    </ion-header>
+
+<ion-content class="black-background" style="border: none;" fullscreen>
+        <img src="http://mncmediakit.com/datafile/thumbnail/{{this.result.id_filetype}}/{{this.result.content_file_download}}"/>
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar class="black-background">
+        <ion-buttons slot="start">
+            <ion-button (click)="closeModal()" color="light"><ion-icon src="assets/icon/close.svg"></ion-icon></ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+              <ion-button (click)="share(this.result)"><ion-icon src="assets/icon/forward.svg" style=" color: white;"></ion-icon></ion-button>
+              <ion-button (click)="downloadpict(this.result)"><ion-icon src="assets/icon/download.svg" style=" color: white;"></ion-icon></ion-button>
+            </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>

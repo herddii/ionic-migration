@@ -1,0 +1,27 @@
+<ion-app>
+  <ion-menu menuId="first" side="end" type="overlay" contentId="content1">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title style="font-weight: bold;">Notification</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list *ngFor="let pages of navigate">
+        <ion-menu-toggle auto-hide="true">
+          <div style="display: flex; flex-direction: row; margin: 5px;">
+            <div style="display: flex; margin-right: 10px; align-items: center;">
+            <ion-thumbnail slot="start">
+              <ion-img [src]="'assets/icon/CAM2.png'"></ion-img>
+            </ion-thumbnail>
+          </div>
+            <div style="display: flex; flex: 3; flex-direction: column; justify-content: center;">
+              <span style="font-size: 14px; font-weight: bold;">Hai Herdi</span>
+              <span style="font-size: 10px; color: darkgray;">Adelia Fortiena Added you in Her Activity</span>
+        </div>
+      </div>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="content1"></ion-router-outlet>
+</ion-app>
