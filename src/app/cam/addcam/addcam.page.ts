@@ -3,7 +3,7 @@ import { ModalController, ToastController, ActionSheetController, Platform, Load
 import { Ionic4DatepickerModalComponent } from '@logisticinfotech/ionic4-datepicker';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { CamServiceService } from '../../service/cam/cam-service.service';
-import { AwalanPage } from '../../awalan/awalan.page';
+import { AwalanPage } from '../../dashboard/awalan/awalan.page';
 import { UniquePipe } from 'ngx-pipes';
 import { FiletaskmodalPage } from '../filetaskmodal/filetaskmodal.page';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
